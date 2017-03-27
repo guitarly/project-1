@@ -4,20 +4,18 @@
 /* ----------------------------------------------- */
 
 /** {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }*/
 
 body {
-  /*background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url("../../vendor/images/FH_Gaming_Main-new.jpg");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;*/
 
   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 5.7)), url("../../vendor/images/nF7HI1b.jpg");
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../vendor/images/nF7HI1b.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -25,82 +23,117 @@ body {
 
 }
 
-
-
-
 html,
 body {
-    color: #555;
-    font-family: 'Lato', 'Arial', sans-serif;
-    font-weight: 300;
-    font-size: 20px;
-    text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+  color: #555;
+  font-family: 'Lato', 'Arial', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 .clearfix {zoom: 1;}
 .clearfix:after {
-    content: '.';
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
+  content: '.';
+  clear: both;
+  display: block;
+  height: 0;
+  visibility: hidden;
 }
 
-/*.row {
-    max-width: 1140px;
-    margin: 0 auto;
-}*/
+.row {
+  max-width: 1140px;
+  margin: 0 auto;
+}
 
 /* ----- BUTTONS ----- */
 
 .btn-text-box {
-    position: absolute;
-    width: 1140px;
-    bottom:10%;
-    left: 110%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+  position: absolute;
+  width: 1140px;
+  bottom:3%;
+  left: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .btn:link,
 .btn:visited{
-    display: inline-block;
-    padding: 10px 30px;
-    font-weight: 300;
-    text-decoration: none;
-    border-radius: 200px;
-    -webkit-transition: background-color 0.2s, border 0.2s, color 0.2s;
-    transition: background-color 0.2s, border 0.2s, color 0.2s;
+  display: inline-block;
+  padding: 10px 30px;
+  font-weight: 300;
+  text-decoration: none;
+  border-radius: 200px;
+  -webkit-transition: background-color 0.2s, border 0.2s, color 0.2s;
+  transition: background-color 0.2s, border 0.2s, color 0.2s;
 }
 
 .btn-full:link,
 .btn-full:visited{
-    background-color: #e67e22;
-    border: 1px solid #e67e22;
-    color: #fff;
-    margin-right: 15px;
+  background-color: #e67e22;
+  border: 1px solid #e67e22;
+  color: #fff;
+  margin-right: 15px;
 }
 
 .btn-ghost:link,
 .btn-ghost:visited {
-    border: 1px solid #e67e22;
-    color: #e67e22;
+  border: 1px solid #e67e22;
+  color: #e67e22;
 }
 
 .btn:hover,
 .btn:active{
-    background-color: #cf6d17;
+  background-color: #cf6d17;
 }
 
 .btn-full:hover,
 .btn-full:active {
-    border: 1px solid #cf6d17;
+  border: 1px solid #cf6d17;
 }
 
 .btn-ghost:hover,
 .btn-ghost:active {
-    border: 1px solid #cf6d17;
-    color: #fff;
+  border: 1px solid #cf6d17;
+  color: #fff;
+}
+
+/*-----------------*/
+/*--   Cards  -----*/
+/*-----------------*/
+
+.cmp-player, .human-player, .cardImage {
+  width: 100px;
+  height: 150px;
+  border-radius: 5px;
+  display: inline-block;
+}
+.cmp-player  {
+  background-color: red;
+}
+.human-player {
+  background-color: blue;
+}
+.main-sec {
+  display: flex;
+  justify-content: center;
+
+  align-items: flex-end;
+}
+#sec-middle-comp {
+  display: flex;
+  justify-content: center;
+  /*align-items: flex-end;*/
+}
+#sec-middle-human{
+  margin: 0 auto;
+  height: 430px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: flex-end;
+
 }

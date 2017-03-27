@@ -1,5 +1,9 @@
 # project-1
-Squeeze Card game
+
+Card game
+
+Catte Instruction
+
 
 Each player will be dealt six cards at the beginning. At each round, the leader in that round will start with a card. 
 Other players in rounds either drop a card (face down) or use a card (face up card) with the condition being bigger and 

@@ -1,0 +1,8 @@
+body {
+  background-image: url("../../vendor/images/FH_Gaming_Main-new.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}

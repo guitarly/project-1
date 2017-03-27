@@ -112,9 +112,11 @@ body {
 }
 .cmp-player  {
   background-color: red;
+  /*font-size: 0;*/
 }
 .human-player {
   background-color: blue;
+  /*font-size: 0;*/
 }
 .main-sec {
   display: flex;

@@ -131,11 +131,24 @@ body {
 }
 #sec-middle-human{
   margin: 0 auto;
-  height: 430px;
+  height: 150px;
   width: 80%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   align-self: flex-end;
+}
+#play-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  height: 400px;
+  width: 100%;
+}
 
+#card-in-play {
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
 }

@@ -31,11 +31,30 @@ $(function() {
       console.log("Fold - face down");
     },
     play: function() {
-      console.log("Play baby");
+
+      // Remove the current play card first.
+      var $getDiv = $('#card-in-play').remove();
+
+      var $playSection = $('#play-section');
+      var $div = $('<div>').attr('id', 'card-in-play');
+      var $img = $('<img>').addClass("cardImage");
+      console.log(games.playerCardOnPlay);
+
+      $img.attr({
+        id: 'play-card',
+        src: 'vendor/images/PNG-cards-1.3/'+games.playerCardOnPlay.image,
+        title: "card",
+        alt: games.playerCardOnPlay.image
+      });
+      $div.append($img);
+      $playSection.append($div);
     },
 
     pickCard: function() {
-      console.log($(this).val());
+      var index = $(this).parent().text();
+      var playerCard = games.players[1].card[index];
+      games.playerCardOnPlay = playerCard;
+      console.log(playerCard);
     },
 
     setBtnCards : function() {
@@ -44,9 +63,7 @@ $(function() {
         var $tempCard = "$btnClickCard"+i;
         $tempCard = $('#human-card-'+i);
         $tempCard.on('click', allButtons.pickCard);
-
       }
-
       console.log("here....");
     }
 
@@ -78,7 +95,7 @@ $(function() {
 
   var cards = {
     suits: ['spades', 'clubs', 'diamonds', 'hearts'],
-    cardsRanks: ['2', '3','4', '5','6','7', '8', '9', '10', 'jack', 'queen','king', 'ace'],
+    cardsRanks: ['2', '3', '4', '5','6','7', '8', '9', '10', 'jack', 'queen','king', 'ace'],
     deckOfCard: []
   };
 
@@ -94,7 +111,8 @@ $(function() {
   }
 
   var games = {
-
+    playerCardOnPlay: {},
+    compCardOnPlay: {},
     players: [],
     // Create a new peon
     createPlayer: function(name) {
@@ -103,10 +121,12 @@ $(function() {
     },
     setUpDeck : function() {
       console.log("desk " + deckOfCard.length);
+
       for (var i = 0; i < suits.length; i++) {
         for (var j = 0; j < cardRanks.length; j++) {
           // card = cardRanks[j] + suits[i];
-          var point = j + 1;
+          var point = 1 + j;
+          point++;
           cardPix = cardRanks[j]+"_of_" + suits[i]+".png";
           deckOfCard.push({"rank": cardRanks[j],  "suite" : suits[i], "image" : cardPix, "backImage":"red_back.png", "points": point });
         }
@@ -193,7 +213,8 @@ $(function() {
           });
 
         }
-        $div.text(arrayCard[i].rank+arrayCard[i].suite);
+        // $div.text(arrayCard[i].rank+arrayCard[i].suite);
+        $div.text(i);
 
         $div.append($img);
         $sectionMiddle.append($div);

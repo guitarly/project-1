@@ -31,29 +31,61 @@ $(function() {
       console.log("Fold - face down");
     },
     play: function() {
+      console.log($(this));
+
+
+
 
       // Remove the current play card first.
-      var $getDiv = $('#card-in-play').remove();
+      // var $getDiv = $('#card-in-play').remove();
+      if ($.isEmptyObject(games.playerCardOnPlay) && games.playerTurn) {
+        alert("Please pick a card.")
 
-      var $playSection = $('#play-section');
-      var $div = $('<div>').attr('id', 'card-in-play');
-      var $img = $('<img>').addClass("cardImage");
-      console.log(games.playerCardOnPlay);
+      } else {
+        if (games.playerTurn) {
 
-      $img.attr({
-        id: 'play-card',
-        src: 'vendor/images/PNG-cards-1.3/'+games.playerCardOnPlay.image,
-        title: "card",
-        alt: games.playerCardOnPlay.image
-      });
-      $div.append($img);
-      $playSection.append($div);
+          // --- testing.. get the current player card index
+          // set it animate later
+          var currentIndex = games.playerCardCurrentIndex;
+          console.log("Current card " +  currentIndex);
+          var $getId = $('#human-card-'+currentIndex);
+          $getId.animate({left: "-=300"}, 500);
+          $getId.hide( 1000, function() {
+
+            $getId.remove();
+          });
+          // ----------
+
+
+          var $playSection = $('#play-section');
+          var $div = $('<div>').attr('id', 'card-in-play');
+          var $img = $('<img>').addClass("cardImage");
+          $img.attr({
+            id: 'play-card',
+            src: 'vendor/images/PNG-cards-1.3/'+games.playerCardOnPlay.image,
+            title: "card",
+            alt: games.playerCardOnPlay.image
+          });
+          $div.append($img);
+          $playSection.append($div);
+          // pass the card which play put on the play section.
+          games.playerCardOnHold = games.playerCardOnPlay;
+          games.playerCardOnPlay = {};
+          games.playerTurn = false;
+      } else {
+        // computer turn ...
+        games.computerTurn();
+      }
+    };
+
+
     },
 
     pickCard: function() {
       var index = $(this).parent().text();
       var playerCard = games.players[1].card[index];
-      games.playerCardOnPlay = playerCard;
+      games.playerCardOnPlay = playerCard;   // set player card - on play
+      games.playerCardCurrentIndex = index;  // set play card index on hand
       console.log(playerCard);
     },
 
@@ -69,12 +101,12 @@ $(function() {
 
   };
 
-  $btnStart.on('click', allButtons.startGame);
-  $btnEnd.on('click', allButtons.endGame);
-  $btnRestart.on('click', allButtons.restart);
-  $btnFold.on('click', allButtons.fold);
-  $btnPlay.on('click', allButtons.play);
-  $btnFoldCard.on('click', allButtons.fold);
+  $btnStart.on('click', allButtons.startGame);  // click start a new round
+  $btnEnd.on('click', allButtons.endGame);    // end the whole game
+  $btnRestart.on('click', allButtons.restart);  // restart the games
+  $btnFold.on('click', allButtons.fold);       // click fold button
+  $btnPlay.on('click', allButtons.play);      // click play button
+  $btnFoldCard.on('click', allButtons.fold);   // ??? will check this later
 
   //-------------
 
@@ -111,8 +143,13 @@ $(function() {
   }
 
   var games = {
-    playerCardOnPlay: {},
     compCardOnPlay: {},
+    playerCardOnPlay: {},
+    playerCardOnHold: {},
+    playerCardCurrentIndex: null,
+    playerTurn: true,
+    aroundOver: false,
+
     players: [],
     // Create a new peon
     createPlayer: function(name) {
@@ -162,6 +199,11 @@ $(function() {
 
     }, // end getCardsForPlayers
     cleanPlayersCards: function () {
+
+      // remove player section
+      var $playSection = $('#play-section');
+      $playSection.children().remove();
+
       console.log("moveCardsBackToDeck");
       var card ;
       for (var i = 0; i < this.players.length; i++) {
@@ -224,6 +266,10 @@ $(function() {
 
     setClickCards: function() {
       allButtons.setBtnCards();
+    },
+
+    computerTurn: function() {  // computer calcuate cards
+      console.log('computer turn ');
     }
 
   } // end Games ...

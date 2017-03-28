@@ -105,18 +105,18 @@ body {
 /*-----------------*/
 
 .cmp-player, .human-player, .cardImage {
-  width: 100px;
-  height: 150px;
+  width: 80px;
+  height: 130px;
   border-radius: 5px;
   display: inline-block;
 }
 .cmp-player  {
-  background-color: red;
-  /*font-size: 0;*/
+  /*background-color: red;*/
+  font-size: 0;
 }
 .human-player {
-  background-color: blue;
-  /*font-size: 0;*/
+  /*background-color: blue;*/
+  font-size: 0;
 }
 .main-sec {
   display: flex;
@@ -127,7 +127,6 @@ body {
 #sec-middle-comp {
   display: flex;
   justify-content: center;
-  /*align-items: flex-end;*/
 }
 #sec-middle-human{
   margin: 0 auto;
@@ -138,12 +137,12 @@ body {
   align-items: flex-end;
   align-self: flex-end;
 }
-#play-section {
+#play-section, #comp-section {
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: center;
-  height: 400px;
+  height: 200px;
   width: 100%;
 }
 
@@ -155,7 +154,6 @@ body {
 
 [id*="human-card-"] {
     width: 100%;
-
 }
 [id*="human-card-"]:hover,
  [id*="human-card-"]:active {

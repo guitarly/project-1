@@ -31,10 +31,6 @@ $(function() {
       console.log("Fold - face down");
     },
     play: function() {
-      console.log($(this));
-
-
-
 
       // Remove the current play card first.
       // var $getDiv = $('#card-in-play').remove();
@@ -72,11 +68,11 @@ $(function() {
           games.playerCardOnHold = games.playerCardOnPlay;
           games.playerCardOnPlay = {};
           games.playerTurn = false;
-      } else {
+        }
         // computer turn ...
         games.computerTurn();
-      }
-    };
+
+      };
 
 
     },
@@ -270,6 +266,36 @@ $(function() {
 
     computerTurn: function() {  // computer calcuate cards
       console.log('computer turn ');
+
+      // Get Human card on hold
+      var humanCardOnHold = games.playerCardOnHold;
+      var humPoints = humanCardOnHold.points;
+      var humSuite = humanCardOnHold.suite;
+      //------------------
+
+      console.log(humanCardOnHold);
+      var computerCards = games.players[0].card;  // Get Computer Cards
+      var filteredValue = computerCards.filter(function (item) { // find a same suite and point is bigger than human card
+        return item.suite === humSuite && item.points > humPoints;
+      });
+      console.log("find computer same suite and bigger point length = " +filteredValue.length);
+
+      // Computer has no card bigger than playser ..
+      if(filteredValue.length === 0) {
+
+        computerCards.sort(function(a,b) {
+          return a.points > b.points;
+        });
+
+        console.log("----------");
+        console.log(computerCards);
+        console.log("----------");
+
+      }
+      //
+      //console.log(computerCards);
+
+      games.playerTurn =true;
     }
 
   } // end Games ...

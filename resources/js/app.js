@@ -15,7 +15,8 @@ $(function() {
   // set up buttons functions
   var allButtons = {
     startGame: function() {
-      games.cleanPlayersCards(); // Clean the bucket first
+      games.cleanPlayersCards('computer'); // Clean the bucket first
+      games.cleanPlayersCards('human'); // Clean the bucket first
       games.getCardsForPlayers(); // Get new cards for players
       games.displayCards('comp'); // display cards on the screen
       games.displayCards('human'); // display cards on the screen
@@ -29,6 +30,8 @@ $(function() {
     },
     fold: function() {
       console.log("Fold - face down");
+      games.foldCards("human");
+      games.removeCards('human');
     },
     play: function() {
 
@@ -42,14 +45,15 @@ $(function() {
 
           // --- testing.. get the current player card index
           // set it animate later
-          var currentIndex = games.playerCardCurrentIndex;
-          console.log("Current card " +  currentIndex);
-          var $getId = $('#human-card-'+currentIndex);
-          $getId.animate({left: "-=300"}, 500);
-          $getId.hide( 1000, function() {
 
-            $getId.remove();
-          });
+          games.removeCards('human');
+          // var currentIndex = games.playerCardCurrentIndex;
+          // console.log("Current card " +  currentIndex);
+          // var $getId = $('#human-card-'+currentIndex);
+          // // $getId.animate({left: "-=300"}, 500);
+          // $getId.hide( 1000, function() {
+          //   $getId.remove();
+          // });
           // ----------
 
 
@@ -57,7 +61,7 @@ $(function() {
           var $div = $('<div>').attr('id', 'card-in-play');
           var $img = $('<img>').addClass("cardImage");
           $img.attr({
-            id: 'play-card',
+            // id: 'play-card',
             src: 'vendor/images/PNG-cards-1.3/'+games.playerCardOnPlay.image,
             title: "card",
             alt: games.playerCardOnPlay.image
@@ -82,6 +86,9 @@ $(function() {
       var playerCard = games.players[1].card[index];
       games.playerCardOnPlay = playerCard;   // set player card - on play
       games.playerCardCurrentIndex = index;  // set play card index on hand
+      var $currentCard = $('#human-card-'+index).css({
+        'margin-top': '-50px'
+      });
       console.log(playerCard);
     },
 
@@ -194,13 +201,15 @@ $(function() {
       }
 
     }, // end getCardsForPlayers
-    cleanPlayersCards: function () {
+    cleanPlayersCards: function (player) {
 
-      // remove player section
-      var $playSection = $('#play-section');
-      $playSection.children().remove();
+      if (player === 'computer') {
+        $('#comp-section').children().remove();
+      } else {
+        // remove player section
+        $('#play-section').children().remove();
+      }
 
-      console.log("moveCardsBackToDeck");
       var card ;
       for (var i = 0; i < this.players.length; i++) {
 
@@ -211,18 +220,22 @@ $(function() {
         this.players[i].card = []; // empty the bucket
 
       }
+
+
     }, // end cleanPlayersCards
 
-    displayCards: function(str) {
+    displayCards: function(player) {
       var $sectionMiddle;
       var className ;
+      var divId;
       var arrayCard ;
 
-      if (str === 'comp') {
+      if (player === 'comp') {
         $sectionMiddle = $('#sec-middle-comp');
         className = 'cmp-player';
         arrayCard = this.players[0].card;
         $sectionMiddle.children('div').remove();  // remove children
+
 
       } else {
         $sectionMiddle = $('#sec-middle-human');
@@ -232,9 +245,17 @@ $(function() {
       }
 
       for (var i = 0; i < 6; i++) {
+        if (player === 'comp') {
+          divId = 'cmp-div-';
+        } else {
+          divId = 'hmn-div-';
+        }
+
         var $div = $('<div>').addClass(className);
         var $img = $('<img>').addClass("cardImage");
-        if (str === 'comp') {
+        divId = divId + i;
+        $div.attr('id', divId);
+        if (player === 'comp') {
           $img.attr({
             id: 'comp-card-' + i,
             src: 'vendor/images/PNG-cards-1.3/'+arrayCard[i].backImage,
@@ -263,6 +284,77 @@ $(function() {
     setClickCards: function() {
       allButtons.setBtnCards();
     },
+    foldCards: function(player) {
+      var $playSection;
+      var $backImage ;
+      var $div;
+      if (player === 'Computer') {
+        // Computer
+        $playSection = $('#comp-section');
+        $backImage = games.compCardOnPlay.backImage
+
+
+      } else {
+        // Player
+        $playSection = $('#play-section');
+        $backImage = games.playerCardOnPlay.backImage;
+
+      }
+
+      $div = $('<div>').attr('id', 'card-in-play');
+      $img = $('<img>').addClass("cardImage");
+      $img.attr({
+        src: 'vendor/images/PNG-cards-1.3/'+$backImage ,
+        title: "card",
+        alt: $backImage
+      });
+      $div.append($img);
+      $playSection.append($div);
+
+    }, // end Fold card
+
+    removeCards: function(player) {
+      var currentIndex ;
+      var $getId ;
+
+      if (player === "Computer") {
+        console.log("removecard for computer");
+        // computer never show face up.. can remove any of if.
+        var $secmiddlecomp = $('#sec-middle-comp');
+        var $number = $secmiddlecomp.children('div').length;
+        if($number >= 0) {
+          console.log($number);
+          var $getCompCard = $('#cmp-div-'+($number - 1));
+          $getCompCard.remove();
+
+        }
+
+
+        // for (var i = 0; i < 6; i++) {
+        //   var $getCompCard = $('#comp-card-'+i);
+        //   console.log($getCompCard);
+        //   if ($getCompCard !== '' ||$getCompCard === null ) {
+        //     $getCompCard.remove();
+        //     break;
+        //   } else {
+        //     console.log("#comp-card-"+i);
+        //   }
+        // }
+
+      } else {
+
+        currentIndex = games.playerCardCurrentIndex;
+        console.log("Current card " +  currentIndex);
+        $getId = $('#human-card-'+currentIndex);
+        // $getId.animate({left: "-=300"}, 500);
+        $getId.hide( 1000, function() {
+          $getId.remove();
+        });
+
+      }
+
+
+    }, // End removeCards
 
     computerTurn: function() {  // computer calcuate cards
       console.log('computer turn ');
@@ -278,31 +370,33 @@ $(function() {
       var filteredValue = computerCards.filter(function (item) { // find a same suite and point is bigger than human card
         return item.suite === humSuite && item.points > humPoints;
       });
+
       console.log("find computer same suite and bigger point length = " +filteredValue.length);
 
-      // Computer has no card bigger than playser ..
-      if(filteredValue.length === 0) {
+      if(filteredValue.length === 0) {  // Computer has no card bigger than player .. need to fold one lowest card.
 
-        computerCards.sort(function(a,b) {
+        computerCards.sort(function(a,b) {  // Sort lowest cards.
           return a.points > b.points;
         });
 
-        console.log("----------");
-        console.log(computerCards);
-        console.log("----------");
+        games.compCardOnPlay = computerCards[0];
+        games.foldCards('Computer');
+        games.removeCards("Computer");
 
-      }
-      //
-      //console.log(computerCards);
+      } else {  // find card(s) bigger than player's card
 
-      games.playerTurn =true;
+
+
     }
 
-  } // end Games ...
+    games.playerTurn =true;
+  }
 
-  // --------------- end classes ------
+} // end Games ...
 
-  init();
+// --------------- end classes ------
+
+init();
 
 
 }); // end JQuery

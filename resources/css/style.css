@@ -152,3 +152,14 @@ body {
   border: 1px solid white;
   border-radius: 10px;
 }
+
+[id*="human-card-"] {
+    width: 100%;
+
+}
+[id*="human-card-"]:hover,
+ [id*="human-card-"]:active {
+  border: 2px solid yellow;
+  margin-top: -50px;
+
+}

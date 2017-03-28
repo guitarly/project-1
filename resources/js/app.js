@@ -147,6 +147,7 @@ $(function() {
 
   var games = {
     compCardOnPlay: {},
+    compCardOnHold: {},
     playerCardOnPlay: {},
     playerCardOnHold: {},
     playerCardCurrentIndex: null,
@@ -162,8 +163,8 @@ $(function() {
     setUpDeck : function() {
       console.log("desk " + deckOfCard.length);
 
-      for (var i = 0; i < suits.length; i++) {
-        for (var j = 0; j < cardRanks.length; j++) {
+      for (var i = 0; i < suits.length; i++) {  // loop suits
+        for (var j = 0; j < cardRanks.length; j++) {  // loop ranks
           // card = cardRanks[j] + suits[i];
           var point = 1 + j;
           point++;
@@ -259,6 +260,7 @@ $(function() {
           $img.attr({
             id: 'comp-card-' + i,
             src: 'vendor/images/PNG-cards-1.3/'+arrayCard[i].backImage,
+            // src: 'vendor/images/PNG-cards-1.3/'+arrayCard[i].image,
             title: "card",
             alt: arrayCard[i].image
           });
@@ -291,7 +293,7 @@ $(function() {
       if (player === 'Computer') {
         // Computer
         $playSection = $('#comp-section');
-        $backImage = games.compCardOnPlay.backImage
+        $backImage = games.compCardOnPlay.backImage;
 
 
       } else {
@@ -318,7 +320,7 @@ $(function() {
       var $getId ;
 
       if (player === "Computer") {
-        console.log("removecard for computer");
+        console.log("remove card for computer");
         // computer never show face up.. can remove any of if.
         var $secmiddlecomp = $('#sec-middle-comp');
         var $number = $secmiddlecomp.children('div').length;
@@ -328,18 +330,6 @@ $(function() {
           $getCompCard.remove();
 
         }
-
-
-        // for (var i = 0; i < 6; i++) {
-        //   var $getCompCard = $('#comp-card-'+i);
-        //   console.log($getCompCard);
-        //   if ($getCompCard !== '' ||$getCompCard === null ) {
-        //     $getCompCard.remove();
-        //     break;
-        //   } else {
-        //     console.log("#comp-card-"+i);
-        //   }
-        // }
 
       } else {
 
@@ -355,6 +345,23 @@ $(function() {
 
 
     }, // End removeCards
+    showComputerCard: function() {
+
+      var $playSection = $('#comp-section');
+      var $image = games.compCardOnPlay.image;
+      $div = $('<div>').attr('id', 'card-in-play');
+      $img = $('<img>').addClass("cardImage");
+      $img.attr({
+        src: 'vendor/images/PNG-cards-1.3/'+$image ,
+        title: "card",
+        alt: $image
+      });
+      $div.append($img);
+      $playSection.append($div);
+
+      games.removeCards("Computer");
+
+    }, // end show computer card
 
     computerTurn: function() {  // computer calcuate cards
       console.log('computer turn ');
@@ -365,13 +372,11 @@ $(function() {
       var humSuite = humanCardOnHold.suite;
       //------------------
 
-      console.log(humanCardOnHold);
+      // Setup and check computer card
       var computerCards = games.players[0].card;  // Get Computer Cards
       var filteredValue = computerCards.filter(function (item) { // find a same suite and point is bigger than human card
         return item.suite === humSuite && item.points > humPoints;
       });
-
-      console.log("find computer same suite and bigger point length = " +filteredValue.length);
 
       if(filteredValue.length === 0) {  // Computer has no card bigger than player .. need to fold one lowest card.
 
@@ -379,13 +384,51 @@ $(function() {
           return a.points > b.points;
         });
 
-        games.compCardOnPlay = computerCards[0];
+        games.compCardOnPlay = computerCards[0];  // assign smallest card
+        deckOfCard.push(computerCards[0]);
+        computerCards.shift();  // remove it from array.
         games.foldCards('Computer');
         games.removeCards("Computer");
+        games.compCardOnPlay = {};
 
       } else {  // find card(s) bigger than player's card
 
+      filteredValue.sort(function(a,b) {  // Sort lowest cards.
+        return a.points > b.points;
+      });
+      games.compCardOnPlay = filteredValue[0];
 
+      // for (var i = 0; i < filteredValue.length; i++) {
+      //   console.log(filteredValue[i].rank + " point "+ filteredValue[i].points);
+      // }
+      // console.log(filteredValue.length);
+      games.showComputerCard();
+      // filteredValue.shift();
+
+
+      //   find index .. to remove it from the computer hands
+      function findIndex() {
+        var index = -1;
+        for (var i = 0; i < computerCards.length; i++) {
+          if (computerCards[i].suite === games.compCardOnPlay.suite &&
+              computerCards[i].points === games.compCardOnPlay.points) {
+                alert("Suite is the same" + i);
+              index = i;
+              return index;
+          }
+        }
+        return index;
+      }
+
+      // var found_names = $.grep(games.players[0].card, function(v) {
+      //   return v.rank === games.compCardOnPlay.rank && v.points === games.compCardOnPlay.points;
+      // });
+      var index = findIndex() ;
+      if (index >= 0) {
+        console.log('i am in the index if statement ' + index);
+        deckOfCard.push(games.compCardOnPlay);
+        games.players[0].card.splice(index, 1);
+      }
 
     }
 

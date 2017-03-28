@@ -56,12 +56,12 @@ $(function() {
           // });
           // ----------
 
-
+          var playCard = games.playerPlayCard++;
           var $playSection = $('#play-section');
           var $div = $('<div>').attr('id', 'card-in-play');
           var $img = $('<img>').addClass("cardImage");
           $img.attr({
-            // id: 'play-card',
+            id: 'play-card-'+playCard,
             src: 'vendor/images/PNG-cards-1.3/'+games.playerCardOnPlay.image,
             title: "card",
             alt: games.playerCardOnPlay.image
@@ -152,6 +152,7 @@ $(function() {
     playerCardOnHold: {},
     playerCardCurrentIndex: null,
     playerTurn: true,
+    playerPlayCard: 0,
     aroundOver: false,
 
     players: [],
@@ -203,6 +204,7 @@ $(function() {
 
     }, // end getCardsForPlayers
     cleanPlayersCards: function (player) {
+      games.playerPlayCard =  0;
 
       if (player === 'computer') {
         $('#comp-section').children().remove();
@@ -363,6 +365,28 @@ $(function() {
 
     }, // end show computer card
 
+    setBackCardImage: function(player) {
+
+      if (player === "Computer") {
+      } else {
+        console.log("setBackCardImage");
+          var humanCardOnHold = games.playerCardOnHold;
+          var $playerSection = $('#play-section');
+          var $idNum = $playerSection.children().length;
+
+          var tempVar = '#play-card-'+ ($idNum - 1);
+          console.log($idNum + "  " + tempVar);
+          var $playerCard = $(tempVar);
+          $playerCard.attr({
+            src: 'vendor/images/PNG-cards-1.3/'+humanCardOnHold.backImage,
+          });
+          console.log($playerCard );
+
+
+      }
+
+    }, // end setBackCardImage
+
     computerTurn: function() {  // computer calcuate cards
       console.log('computer turn ');
 
@@ -397,13 +421,7 @@ $(function() {
         return a.points > b.points;
       });
       games.compCardOnPlay = filteredValue[0];
-
-      // for (var i = 0; i < filteredValue.length; i++) {
-      //   console.log(filteredValue[i].rank + " point "+ filteredValue[i].points);
-      // }
-      // console.log(filteredValue.length);
       games.showComputerCard();
-      // filteredValue.shift();
 
 
       //   find index .. to remove it from the computer hands
@@ -412,7 +430,6 @@ $(function() {
         for (var i = 0; i < computerCards.length; i++) {
           if (computerCards[i].suite === games.compCardOnPlay.suite &&
               computerCards[i].points === games.compCardOnPlay.points) {
-                alert("Suite is the same" + i);
               index = i;
               return index;
           }
@@ -420,15 +437,13 @@ $(function() {
         return index;
       }
 
-      // var found_names = $.grep(games.players[0].card, function(v) {
-      //   return v.rank === games.compCardOnPlay.rank && v.points === games.compCardOnPlay.points;
-      // });
       var index = findIndex() ;
       if (index >= 0) {
-        console.log('i am in the index if statement ' + index);
         deckOfCard.push(games.compCardOnPlay);
         games.players[0].card.splice(index, 1);
       }
+
+      games.setBackCardImage('Human');
 
     }
 

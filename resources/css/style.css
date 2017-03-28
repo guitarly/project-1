@@ -59,6 +59,17 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.btn-text-box-cmp {
+  position: absolute;
+  width: 1140px;
+  top:10%;
+  right: -57%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
 .btn:link,
 .btn:visited{
   display: inline-block;

@@ -262,7 +262,7 @@ $(function() {
   // objects Classes ---
   // -------------------
 
-// player class
+  // player class
   var Player = function(name, money) {
     this.name = name;
     this.money= money;
@@ -393,7 +393,7 @@ $(function() {
         $('#play-section').children().remove(); // remove all elements under it.
         $('#sec-middle-human').children().remove(); // remove all elements under it.
       }
-        $('.btn-text-box-winner').children().remove(); // remove image
+      $('.btn-text-box-winner').children().remove(); // remove image
 
 
       // Push all users cards back to the card deck.
@@ -775,7 +775,7 @@ $(function() {
       } else if(str === "LOST"){
         pictures = ['youaretheloser.jpg', 'youjustlost.jpg'];
       } else if(str === "OVER") {
-          pictures = ['gameOver.jpg', 'gameOver1.jpg'];
+        pictures = ['gameOver.jpg', 'gameOver1.jpg'];
       }
 
       var index = Math.floor(Math.random() * pictures.length);
@@ -788,39 +788,40 @@ $(function() {
       var $img = $('<img>').addClass("winner-image");
       if(str === 'OVER') {
         $img.attr({
-            src: 'vendor/images/'+getPicture,
-            title: "Winner",
-            alt: getPicture
-          });
+          src: 'vendor/images/'+getPicture,
+          title: "Winner",
+          alt: getPicture
+        });
         $img.css({'width':'90%'});
       } else {
         $img.attr({
-            src: 'vendor/images/'+getPicture,
-            title: "Winner",
-            alt: getPicture
-          });
+          src: 'vendor/images/'+getPicture,
+          title: "Winner",
+          alt: getPicture
+        });
       }
 
       $btnTexBoxWinner.append($img);
 
-      // $img.animate({left: '350px',
-      //             opacity: '0.9',
-      //             height: '150px',
-      //             width: '10%',
-      //             margin: '0 auto'});
-      // $img.animate({right: '350px',
-      //             opacity: '0.9',
-      //             height: '150px',
-      //             width: '190%',
-      //             margin: '0 auto'});
+      // $btnTexBoxWinner.animate({left: '350px',
+      // opacity: '0.9',
+      // height: '150px',
+      // width: '10%',
+      // margin: '0 auto'});
+      // $btnTexBoxWinner.animate({right: '350px',
+      // opacity: '0.9',
+      // height: '150px',
+      // width: '190%',
+      // margin: '0 auto'});
       //
-      // $img.animate({left: '350px',
-      //             opacity: '0.9',
-      //             height: '150px',
-      //             width: '60%',
-      //             margin: '0 auto'});
-
-
+      // $btnTexBoxWinner.animate({left: '350px',
+      // opacity: '0.9',
+      // height: '250px',
+      // width: '70%',
+      // bottom: '50%',
+      // margin: '0 auto'});
+      //
+      // $btnTexBoxWinner.stop();
 
     }, // end setWinLossImage
     hideElements: function() {

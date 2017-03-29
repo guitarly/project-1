@@ -19,11 +19,13 @@ $(function() {
   // set up buttons functions
   var allButtons = {
     startGame: function() {
-      games.resetStartNewGame();
+
       games.setUserFundBet(false, 0);
       if (games.bet <= 0) {
         alert("Please choose your bet.")
       } else {
+
+        games.resetStartNewGame();
         games.cleanPlayersCards('computer'); // Clean the bucket first
         games.cleanPlayersCards('human'); // Clean the bucket first
         games.getCardsForPlayers(); // Get new cards for players
@@ -31,6 +33,8 @@ $(function() {
         games.displayCards('human'); // display cards on the screen
         games.setClickCards();
         allButtons.setButtons();
+
+
 
       }
 
@@ -164,7 +168,7 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
 
     }, // end computer turn
     setButtons: function() {
-      console.log("setButton ... ");
+      console.log("setButton ... " + games.gameOver);
 
       if (games.gameOver) {
         $('#btn-start').show();
@@ -295,17 +299,20 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
       var winMoney = 0;
       var humanWin = false;
 
+      // if computer won 4 in the first four rounds. computer win
       if (games.cmpWinByRound === 4 && games.humWinByRound === 0) {
         games.gameOver = true;
         humanWin = false;
-
       }
+      // if human won the first 4 rounds - human win.
       if (games.cmpWinByRound === 0 && games.humWinByRound === 4) {
         games.gameOver = true;
         humanWin = true;
 
       }
       console.log(games.storeWinnerByRound);
+
+      // the comp and human pass first four around.  This is round #5 & 6.  who won a round 6 is the winner.
       if (games.storeWinnerByRound.length === 6) {
         var whoWin = games.storeWinnerByRound[5];
         console.log(whoWin);
@@ -328,11 +335,8 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
           alert("You Lost");
         }
         games.bet = 0;
-        if (games.gameOver) {
-          $('#btn-start').show();
-          $('#btn-fold').hide();
-          $('#btn-play').hide();
-        }
+        allButtons.setButtons();
+
 
 
        //allButtons.setButtons();

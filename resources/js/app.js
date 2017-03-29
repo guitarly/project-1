@@ -44,6 +44,7 @@ $(function() {
       var answer = prompt("Do you want to close this window ?", "yes/no");
       if (answer.toUpperCase() === 'YES' ) {
         // display big message in the middle....
+        games.setWinLossImage('Over');
       }
     },
     restart: function() { // reset the whole game
@@ -364,14 +365,14 @@ $(function() {
 
       if (games.gameOver) {
         if (humanWin) {
-          alert("You Win");
+          //alert("You Win");
           games.setWinLossImage("Win");
           var winMoney = games.bet * 2;
           games.setUserFundBet(true,winMoney);
 
 
         } else {
-          alert("You Lost");
+          //alert("You Lost");
           games.setWinLossImage("lost");
         }
         games.bet = 0;
@@ -766,11 +767,14 @@ $(function() {
     setWinLossImage: function(str) {
       console.log("iam in setWinLossImage");
       var pictures ;
+      str = str.toUpperCase();
       // set winning image
-      if (str === 'Win') {
+      if (str === 'WIN') {
         pictures = ['Big-Win.png','luckyWinner.png', 'win1.png'];
-      } else {
+      } else if(str === "LOST"){
         pictures = ['youaretheloser.jpg', 'youjustlost.jpg'];
+      } else if(str === "OVER") {
+          pictures = ['gameOver.jpg', 'gameOver1.jpg'];
       }
 
       var index = Math.floor(Math.random() * pictures.length);
@@ -787,6 +791,24 @@ $(function() {
           alt: getPicture
         });
       $btnTexBoxWinner.append($img);
+
+      // $img.animate({left: '350px',
+      //             opacity: '0.9',
+      //             height: '150px',
+      //             width: '10%',
+      //             margin: '0 auto'});
+      // $img.animate({right: '350px',
+      //             opacity: '0.9',
+      //             height: '150px',
+      //             width: '190%',
+      //             margin: '0 auto'});
+      //
+      // $img.animate({left: '350px',
+      //             opacity: '0.9',
+      //             height: '150px',
+      //             width: '60%',
+      //             margin: '0 auto'});
+
 
 
     }

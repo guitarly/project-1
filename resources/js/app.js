@@ -19,6 +19,7 @@ $(function() {
   // set up buttons functions
   var allButtons = {
     startGame: function() {
+      games.resetStartNewGame();
       games.setUserFundBet(false, 0);
       if (games.bet <= 0) {
         alert("Please choose your bet.")
@@ -131,7 +132,7 @@ $(function() {
     },
     checkComputer: function() {
 
-        games.checkComparedCard();
+      games.checkComparedCard();
 
 
     } // end computer turn
@@ -197,8 +198,7 @@ $(function() {
     cmpWinByRound: 0,
     humWinByRound: 0,
     bet: 0,
-    keepHumanCard: [],
-    keepComputerCard: [],
+    storeWinnerByRound:[],
     players: [],
     // Create a new peon
     createPlayer: function(name) {
@@ -248,12 +248,51 @@ $(function() {
 
     }, // end getCardsForPlayers
     checkWinner: function() {
-      alert(games.cmpWinByRound + "   human "+ games.humWinByRound);
+      console.log(games.cmpWinByRound + "   human "+ games.humWinByRound);
+      var countAllRound = games.cmpWinByRound + games.humWinByRound;
+      var winMoney = 0;
+      var humanWin = false;
+
+      if (games.cmpWinByRound === 4 && games.humWinByRound === 0) {
+        games.gameOver = true;
+        humanWin = false;
+
+      }
+      if (games.cmpWinByRound === 0 && games.humWinByRound === 4) {
+        games.gameOver = true;
+        humanWin = true;
+
+      }
+      console.log(games.storeWinnerByRound);
+      if (games.storeWinnerByRound.length === 6) {
+        var whoWin = games.storeWinnerByRound[5];
+        console.log(whoWin);
+        if (whoWin === "Computer") {
+          humanWin = false;
+        } else {
+          humanWin = true;
+        }
+        games.gameOver = true;
+      }
+
+      if (games.gameOver) {
+        if (humanWin) {
+          alert("You Win");
+          var winMoney = games.bet * 2;
+          games.setUserFundBet(true,winMoney);
+
+
+
+        } else {
+          alert("You Lost");
+        }
+        games.bet = 0;
+
+      }
 
     },
     cleanPlayersCards: function (player) {
-      games.playerPlayCard =  0;
-      games.computerPlayCard = 0;
+
 
       if (player === 'computer') {
         $('#comp-section').children().remove();
@@ -276,6 +315,8 @@ $(function() {
 
     }, // end cleanPlayersCards
     setUserFundBet: function(isAdd, money) {
+
+
       var player = games.players[1];
       var fund =  player.money;
       console.log(fund);
@@ -370,6 +411,9 @@ $(function() {
         $playSection = $('#play-section');
         $backImage = games.playerCardOnPlay.backImage;
 
+        games.cmpWinByRound++;
+        games.storeWinnerByRound.push('Computer');
+
       }
 
       $div = $('<div>').attr('id', 'card-in-play');
@@ -381,6 +425,7 @@ $(function() {
       });
       $div.append($img);
       $playSection.append($div);
+      games.checkWinner();
 
     }, // end Fold card
 
@@ -432,29 +477,34 @@ $(function() {
 
     },
     showComputerCard: function() {
-      var countCard = games.computerPlayCard++;
-      var $playSection = $('#comp-section');
-      var $image = games.compCardOnPlay.image;
-      $div = $('<div>').attr('id', 'card-in-play');
-      $img = $('<img>').addClass("cardImage");
-      $img.attr({
-        id:  'cmp-card-'+countCard,
-        src: 'vendor/images/PNG-cards-1.3/'+$image ,
-        title: "card",
-        alt: $image
-      });
-      $div.append($img);
-      $playSection.append($div);
+      var computerCards = games.players[0].card;
+      if (computerCards.length > 0 || games.gameOver === false) {
+        var countCard = games.computerPlayCard++;
+        var $playSection = $('#comp-section');
+        var $image = games.compCardOnPlay.image;
+        $div = $('<div>').attr('id', 'card-in-play');
+        $img = $('<img>').addClass("cardImage");
+        $img.attr({
+          id:  'cmp-card-'+countCard,
+          src: 'vendor/images/PNG-cards-1.3/'+$image ,
+          title: "card",
+          alt: $image
+        });
+        $div.append($img);
+        $playSection.append($div);
 
-      games.removeCards("Computer");
+        games.removeCards("Computer");
+
+      }
+
 
     }, // end show computer card
 
     setBackCardImage: function(player) {
-        var cardOnHold;
-        var $playerSection;
-        var $idNum ;
-        var tempVar ;
+      var cardOnHold;
+      var $playerSection;
+      var $idNum ;
+      var tempVar ;
       if (player === "Computer") {
         cardOnHold = games.compCardOnPlay;
         $playerSection = $('#comp-section');
@@ -462,6 +512,8 @@ $(function() {
         tempVar = '#cmp-card-'+ ($idNum - 1);
         games.playerDealer = true;
         games.playerTurn = true;
+        games.humWinByRound++;
+        games.storeWinnerByRound.push('Human');
 
 
       } else {
@@ -473,7 +525,8 @@ $(function() {
 
         games.playerDealer = false;
         games.playerTurn = false;
-
+        games.cmpWinByRound++;
+        games.storeWinnerByRound.push('Computer');
 
       }
 
@@ -481,6 +534,7 @@ $(function() {
       $playerCard.attr({
         src: 'vendor/images/PNG-cards-1.3/'+cardOnHold.backImage
       });
+      games.checkWinner();
 
     }, // end setBackCardImage
     setPlayerCardSection: function() {
@@ -533,6 +587,8 @@ $(function() {
         games.compCardOnPlay = {};
         games.playerTurn =true;  // Human win.. human go first
         games.playerDealer = true;
+        games.humWinByRound++;
+        games.storeWinnerByRound.push('Human');
 
       } else {  // find card(s) bigger than player's card
 
@@ -567,9 +623,16 @@ $(function() {
 
       }
 
-// fore testin ..
-// games.playerTurn = true;
-
+      games.checkWinner();
+    },
+    resetStartNewGame: function() {
+      // Reset Winning rounds
+      games.gameOver = false;
+      games.cmpWinByRound = 0;
+      games.humWinByRound = 0;
+      games.playerPlayCard =  0;
+      games.computerPlayCard = 0;
+      games.storeWinnerByRound = [];
     }
 
   } // end Games ...

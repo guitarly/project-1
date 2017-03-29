@@ -41,17 +41,20 @@ $(function() {
     },
     endGame: function() {
       console.log("End of Game");
+      var answer = prompt("Do you want to close this window ?", "yes/no");
+      if (answer.toUpperCase() === 'YES' ) {
+        // display big message in the middle....
+      }
     },
-    restart: function() {
+    restart: function() { // reset the whole game
       console.log("restart game");
-
       init();
     },
     fold: function() {
       if (games.playerTurn) {
         games.foldCards("Human");
         games.removeCards('Human');
-        games.checkWinner();
+        //games.checkWinner();
       }
     },
     play: function() {
@@ -114,7 +117,7 @@ $(function() {
 
         var creditGood = false;
         var bet = 0;
-
+        // Check Credit
         var $getBet = $(this).text();
         if ($getBet=== '$5') {
           creditGood = games.checkCredit(5);
@@ -125,8 +128,7 @@ $(function() {
         }
 
         if (creditGood) {
-
-
+          // set bet amount button
           if ($getBet=== '$5') {
             games.bet = 5;
             $('#btn-10').removeClass('btn-full');
@@ -160,7 +162,7 @@ $(function() {
           $(this).addClass('btn-full');
 
         } else {
-          games.bet = 0;
+          games.bet = 0;  // not enough credit .. set it bet amount to 0
         } // end if credit good..
         games.setUserFundBet(false, games.bet );
 
@@ -169,7 +171,7 @@ $(function() {
 
     }, // end Bet
 
-    setBtnCards : function() {
+    setBtnCards : function() { // add all six cards buttons for human players
       var tempVar ;
       for (var i = 0; i < 6; i++) {
         var $tempCard = "$btnClickCard"+i;
@@ -182,13 +184,13 @@ $(function() {
       games.computerPickCard();
 
     },
-    checkComputer: function() {
+    checkComputer: function() {  // check computer to pick by itself
 
       games.checkComparedCard();
 
 
     }, // end computer turn
-    setButtons: function() {
+    setButtons: function() {  // set buttons once the game play or over.
       console.log("setButton ... " + games.gameOver);
 
       if (games.gameOver) {
@@ -247,6 +249,7 @@ $(function() {
 
   }
 
+  // var card and deck.  will do a loop to generate all cards.
   var cards = {
     suits: ['spades', 'clubs', 'diamonds', 'hearts'],
     cardsRanks: ['2', '3', '4', '5','6','7', '8', '9', '10', 'jack', 'queen','king', 'ace'],
@@ -257,6 +260,7 @@ $(function() {
   // objects Classes ---
   // -------------------
 
+// player class
   var Player = function(name, money) {
     this.name = name;
     this.money= money;
@@ -285,7 +289,7 @@ $(function() {
       var newPlayer = new Player(name, 15);
       this.players.push(newPlayer);
     },
-    setUpDeck : function() {
+    setUpDeck : function() {  // setup a deck.  Loop thrus suites and ranks.
       console.log("desk " + deckOfCard.length);
 
       for (var i = 0; i < suits.length; i++) {  // loop suits
@@ -361,12 +365,14 @@ $(function() {
       if (games.gameOver) {
         if (humanWin) {
           alert("You Win");
+          games.setWinLossImage("Win");
           var winMoney = games.bet * 2;
           games.setUserFundBet(true,winMoney);
 
 
         } else {
           alert("You Lost");
+          games.setWinLossImage("lost");
         }
         games.bet = 0;
         allButtons.setButtons();
@@ -385,6 +391,7 @@ $(function() {
         $('#play-section').children().remove(); // remove all elements under it.
         $('#sec-middle-human').children().remove(); // remove all elements under it.
       }
+        $('.btn-text-box-winner').children().remove(); // remove image
 
 
       // Push all users cards back to the card deck.
@@ -754,6 +761,33 @@ $(function() {
       games.players = [];
       games.cleanPlayersCards('computer'); // Clean the bucket first
       games.cleanPlayersCards('human'); // Clean the bucket first
+
+    }, // end resetTheWholeGame
+    setWinLossImage: function(str) {
+      console.log("iam in setWinLossImage");
+      var pictures ;
+      // set winning image
+      if (str === 'Win') {
+        pictures = ['Big-Win.png','luckyWinner.png', 'win1.png'];
+      } else {
+        pictures = ['youaretheloser.jpg', 'youjustlost.jpg'];
+      }
+
+      var index = Math.floor(Math.random() * pictures.length);
+      var getPicture = pictures[index];
+      console.log(index +  "   " + getPicture);
+
+      var $btnTexBoxWinner = $('.btn-text-box-winner');
+      console.log($btnTexBoxWinner);
+
+      var $img = $('<img>').addClass("winner-image");
+      $img.attr({
+          src: 'vendor/images/'+getPicture,
+          title: "Winner",
+          alt: getPicture
+        });
+      $btnTexBoxWinner.append($img);
+
 
     }
 

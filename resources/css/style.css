@@ -89,7 +89,7 @@ body {
   height: 200px;
   width: 20%;
   margin: 0 center;
-  float: right;      
+  float: right;
 }
 
 
@@ -187,6 +187,22 @@ body {
   padding: 10px;
   border: 1px solid white;
   border-radius: 10px;
+}
+
+#btn-deal {
+  color: white;
+  background-color: rgba(0,0,0, 1.0);
+  font-weight: bold;
+  border: 1px solid yellow;
+  height:  20px;
+  width: 2%;
+}
+
+.winner-image {
+  border-radius: 50px;
+  margin: 0 auto;
+  display: flex;
+  width: 30%;
 }
 
 [id*="human-card-"] {

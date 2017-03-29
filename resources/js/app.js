@@ -3,11 +3,11 @@ console.log("Catte Card game is running");
 // JQuery
 $(function() {
 
-
-  var $btnStart = $('#btn-start');
+  // get all buttons
+  var $btnStart = $('#btn-start'); // start button
   var $btnEnd = $('#btn-end');
-  var $btnRestart = $('#btn-restart');
-  var $btnFold = $('#btn-fold');
+  var $btnRestart = $('#btn-restart'); // restart the whole games
+  var $btnFold = $('#btn-fold');    // fold button
   var $btnPlay = $('#btn-play');
   var $btnFoldCard = $('#foldCard');
   var $btnCompPick = $('#btn-comp-pick');
@@ -375,20 +375,21 @@ $(function() {
 
     },
     cleanPlayersCards: function (player) {
-
+      // clean all call.. this can be refresh the whole page.
 
       if (player === 'computer') {
-        $('#comp-section').children().remove();
-        $('#sec-middle-comp').children().remove();
+        $('#comp-section').children().remove();  // remove all elements under it.
+        $('#sec-middle-comp').children().remove(); // remove all elements under it.
       } else {
         // remove player section
-        $('#play-section').children().remove();
-        $('#sec-middle-human').children().remove();
+        $('#play-section').children().remove(); // remove all elements under it.
+        $('#sec-middle-human').children().remove(); // remove all elements under it.
       }
 
+
+      // Push all users cards back to the card deck.
       var card ;
       for (var i = 0; i < this.players.length; i++) {
-
         for (var j = 0; j < this.players[i].card.length; j++) {
           card =this.players[i].card[j];
           deckOfCard.push(card);

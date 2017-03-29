@@ -49,9 +49,17 @@ body {
 
 /* ----- BUTTONS ----- */
 
-.btn-text-box {
+.btn-text-box, .btn-text-box-cmp,
+.btn-text-box-money{
+
   position: absolute;
   width: 1140px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn-text-box {
   bottom:3%;
   left: 100%;
   -webkit-transform: translate(-50%, -50%);
@@ -60,13 +68,28 @@ body {
 }
 
 .btn-text-box-cmp {
-  position: absolute;
-  width: 1140px;
   top:10%;
   right: -57%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.btn-text-box-money {
+  color: white;
+  bottom:15%;
+  left: 80%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border: 1px solid #e67e22;
+  padding: 10px 30px;
+  text-decoration: none;
+  border-radius: 200px;
+  height: 200px;
+  width: 20%;
+  margin: 0 center;
+  float: right;      
 }
 
 
@@ -110,7 +133,10 @@ body {
   border: 1px solid #cf6d17;
   color: #fff;
 }
-
+#btn-fund {
+  width: 35%;
+  left:50%;
+}
 /*-----------------*/
 /*--   Cards  -----*/
 /*-----------------*/

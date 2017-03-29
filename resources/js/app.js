@@ -11,17 +11,27 @@ $(function() {
   var $btnPlay = $('#btn-play');
   var $btnFoldCard = $('#foldCard');
   var $btnCompPick = $('#btn-comp-pick');
+  var $btnBet5 = $('#btn-5');
+  var $btnBet10 = $('#btn-10');
+  var $btnBet20 = $('#btn-20');
 
 
   // set up buttons functions
   var allButtons = {
     startGame: function() {
-      games.cleanPlayersCards('computer'); // Clean the bucket first
-      games.cleanPlayersCards('human'); // Clean the bucket first
-      games.getCardsForPlayers(); // Get new cards for players
-      games.displayCards('comp'); // display cards on the screen
-      games.displayCards('human'); // display cards on the screen
-      games.setClickCards();
+      games.setUserFundBet(false, 0);
+      if (games.bet <= 0) {
+        alert("Please choose your bet.")
+      } else {
+        games.cleanPlayersCards('computer'); // Clean the bucket first
+        games.cleanPlayersCards('human'); // Clean the bucket first
+        games.getCardsForPlayers(); // Get new cards for players
+        games.displayCards('comp'); // display cards on the screen
+        games.displayCards('human'); // display cards on the screen
+        games.setClickCards();
+
+      }
+
     },
     endGame: function() {
       console.log("End of Game");
@@ -30,7 +40,6 @@ $(function() {
       console.log("restart game");
     },
     fold: function() {
-      console.log("Fold - face down");
       if (games.playerTurn) {
         games.foldCards("Human");
         games.removeCards('Human');
@@ -61,8 +70,15 @@ $(function() {
           // ----------
 
           games.setPlayerCardSection();
-          // computer turn ...
-          allButtons.checkComputer();
+
+          if (games.playerDealer && games.playerTurn) {
+
+            // computer turn ...
+            allButtons.checkComputer();
+
+          } else {
+            games.setBackCardImage('Computer');
+          }
 
         } else {
           alert("Computer turns")
@@ -81,8 +97,24 @@ $(function() {
       var $currentCard = $('#human-card-'+index).css({
         'margin-top': '-50px'
       });
-      console.log(playerCard);
     },
+    bet: function() {
+      console.log($(this).text());
+      var $getBet = $(this).text();
+      if ($getBet=== '$5') {
+        games.bet = 5;
+      } else if($getBet === '$10') {
+        games.bet = 10;
+      } else if($getBet === '$20') {
+        games.bet = 20;
+      } else {
+        games.bet = 0;
+      }
+      $(this).css('color','white');
+      $(this).addClass('btn-full');
+      games.setUserFundBet(false, games.bet );
+
+    }, // end Bet
 
     setBtnCards : function() {
       var tempVar ;
@@ -93,19 +125,13 @@ $(function() {
       }
     }, // end setBtnCards
     computerPick: function() {
-      console.log('computer');
       // computer turn to hit a card.
       games.computerPickCard();
 
     },
     checkComputer: function() {
 
-      if (games.playerTurn && games.playerDealer) {
-
         games.checkComparedCard();
-      }
-
-
 
 
     } // end computer turn
@@ -119,6 +145,9 @@ $(function() {
   $btnFold.on('click', allButtons.fold);       // click fold button
   $btnPlay.on('click', allButtons.play);      // click play button
   $btnFoldCard.on('click', allButtons.fold);   // ??? will check this later
+  $btnBet5.on('click', allButtons.bet);
+  $btnBet10.on('click', allButtons.bet);
+  $btnBet20.on('click', allButtons.bet);
 
   //-------------
 
@@ -167,6 +196,9 @@ $(function() {
     gameOver: false,
     cmpWinByRound: 0,
     humWinByRound: 0,
+    bet: 0,
+    keepHumanCard: [],
+    keepComputerCard: [],
     players: [],
     // Create a new peon
     createPlayer: function(name) {
@@ -216,7 +248,8 @@ $(function() {
 
     }, // end getCardsForPlayers
     checkWinner: function() {
-      alert('winner')
+      alert(games.cmpWinByRound + "   human "+ games.humWinByRound);
+
     },
     cleanPlayersCards: function (player) {
       games.playerPlayCard =  0;
@@ -242,6 +275,22 @@ $(function() {
 
 
     }, // end cleanPlayersCards
+    setUserFundBet: function(isAdd, money) {
+      var player = games.players[1];
+      var fund =  player.money;
+      console.log(fund);
+      console.log(money);
+      if (isAdd) {
+        fund = fund + money;
+      } else {
+        fund =  fund - money;
+      }
+      games.players[1].money = fund;
+      var $moneyBox = $('#btn-fund');
+      $moneyBox.text("Credit:   $"+fund);
+
+
+    }, // End setUserFundBet
 
     displayCards: function(player) {
       var $sectionMiddle;
@@ -313,6 +362,7 @@ $(function() {
         // Computer
         $playSection = $('#comp-section');
         $backImage = games.compCardOnPlay.backImage;
+
       } else {
         games.playerDealer = false;
         games.playerTurn = false;
@@ -401,24 +451,36 @@ $(function() {
     }, // end show computer card
 
     setBackCardImage: function(player) {
-
+        var cardOnHold;
+        var $playerSection;
+        var $idNum ;
+        var tempVar ;
       if (player === "Computer") {
-      } else {
-        console.log("setBackCardImage");
-        var humanCardOnHold = games.playerCardOnHold;
-        var $playerSection = $('#play-section');
-        var $idNum = $playerSection.children().length;
+        cardOnHold = games.compCardOnPlay;
+        $playerSection = $('#comp-section');
+        $idNum = $playerSection.children().length;
+        tempVar = '#cmp-card-'+ ($idNum - 1);
+        games.playerDealer = true;
+        games.playerTurn = true;
 
-        var tempVar = '#play-card-'+ ($idNum - 1);
-        console.log($idNum + "  " + tempVar);
-        var $playerCard = $(tempVar);
-        $playerCard.attr({
-          src: 'vendor/images/PNG-cards-1.3/'+humanCardOnHold.backImage,
-        });
-        console.log($playerCard );
+
+      } else {
+
+        cardOnHold = games.playerCardOnHold;
+        $playerSection = $('#play-section');
+        $idNum = $playerSection.children().length;
+        tempVar = '#play-card-'+ ($idNum - 1);
+
+        games.playerDealer = false;
+        games.playerTurn = false;
 
 
       }
+
+      var $playerCard = $(tempVar);
+      $playerCard.attr({
+        src: 'vendor/images/PNG-cards-1.3/'+cardOnHold.backImage
+      });
 
     }, // end setBackCardImage
     setPlayerCardSection: function() {
@@ -471,7 +533,6 @@ $(function() {
         games.compCardOnPlay = {};
         games.playerTurn =true;  // Human win.. human go first
         games.playerDealer = true;
-        games.humWinByRound += 1;
 
       } else {  // find card(s) bigger than player's card
 
@@ -503,7 +564,6 @@ $(function() {
         games.setBackCardImage('Human');
         games.playerDealer = false;
         games.playerTurn = false;
-        games.cmpWinByRound += 1;
 
       }
 

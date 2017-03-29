@@ -30,6 +30,7 @@ $(function() {
         games.displayCards('comp'); // display cards on the screen
         games.displayCards('human'); // display cards on the screen
         games.setClickCards();
+        allButtons.setButtons();
 
       }
 
@@ -71,16 +72,12 @@ $(function() {
           // ----------
 
           games.setPlayerCardSection();
-
           if (games.playerDealer && games.playerTurn) {
-
             // computer turn ...
             allButtons.checkComputer();
-
           } else {
             games.setBackCardImage('Computer');
           }
-
         } else {
           alert("Computer turns")
         }
@@ -101,19 +98,49 @@ $(function() {
     },
     bet: function() {
       console.log($(this).text());
-      var $getBet = $(this).text();
-      if ($getBet=== '$5') {
-        games.bet = 5;
-      } else if($getBet === '$10') {
-        games.bet = 10;
-      } else if($getBet === '$20') {
-        games.bet = 20;
-      } else {
-        games.bet = 0;
+console.log("is game over ? (inside bet) "+ games.gameOver);
+      if (games.gameOver) {
+        var getCurrentBet = games.bet ;
+        if (getCurrentBet > 0) {
+          games.setUserFundBet(true, getCurrentBet);
+          games.bet = 0;
+        }
+        var $getBet = $(this).text();
+        if ($getBet=== '$5') {
+          games.bet = 5;
+          $('#btn-10').removeClass('btn-full');
+          $('#btn-20').removeClass('btn-full');
+          $('#btn-10').css('color','');
+          $('#btn-20').css('color','');
+        } else if($getBet === '$10') {
+          games.bet = 10;
+          $('#btn-5').removeClass('btn-full');
+          $('#btn-20').removeClass('btn-full');
+          $('#btn-5').css('color','');
+          $('#btn-20').css('color','');
+        } else if($getBet === '$20') {
+          games.bet = 20;
+          $('#btn-5').removeClass('btn-full');
+          $('#btn-10').removeClass('btn-full');
+          $('#btn-10').css('color','');
+          $('#btn-5').css('color','');
+        } else {
+          games.bet = 0;
+          // $('#btn-5').removeClass('btn-full');
+          // $('#btn-10').removeClass('btn-full');
+          // $('#btn-20').removeClass('btn-full');
+          //
+          // $('#btn-10').css('color','');
+          // $('#btn-20').css('color','');
+          // $('#btn-5').css('color','');
+        }
+
+        $(this).css('color','white');
+        $(this).addClass('btn-full');
+        games.setUserFundBet(false, games.bet );
+
       }
-      $(this).css('color','white');
-      $(this).addClass('btn-full');
-      games.setUserFundBet(false, games.bet );
+
 
     }, // end Bet
 
@@ -135,7 +162,22 @@ $(function() {
       games.checkComparedCard();
 
 
-    } // end computer turn
+    }, // end computer turn
+    setButtons: function() {
+      console.log("setButton ... ");
+
+      if (games.gameOver) {
+        $('#btn-start').show();
+        $('#btn-fold').hide();
+        $('#btn-play').hide();
+
+      } else {
+        $('#btn-start').hide();
+        $('#btn-fold').show();
+        $('#btn-play').show();
+      }
+
+    }
 
   };
 
@@ -194,7 +236,7 @@ $(function() {
     playerPlayCard: 0,
     computerPlayCard: 0,
     playerDealer: true,
-    gameOver: false,
+    gameOver: true,
     cmpWinByRound: 0,
     humWinByRound: 0,
     bet: 0,
@@ -282,11 +324,19 @@ $(function() {
           games.setUserFundBet(true,winMoney);
 
 
-
         } else {
           alert("You Lost");
         }
         games.bet = 0;
+        if (games.gameOver) {
+          $('#btn-start').show();
+          $('#btn-fold').hide();
+          $('#btn-play').hide();
+        }
+
+
+       //allButtons.setButtons();
+
 
       }
 

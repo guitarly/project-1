@@ -102,45 +102,64 @@ $(function() {
     },
     bet: function() {
       console.log($(this).text());
-console.log("is game over ? (inside bet) "+ games.gameOver);
+      console.log("is game over ? (inside bet) "+ games.gameOver);
       if (games.gameOver) {
         var getCurrentBet = games.bet ;
         if (getCurrentBet > 0) {
           games.setUserFundBet(true, getCurrentBet);
           games.bet = 0;
         }
+
+        var creditGood = false;
+        var bet = 0;
+
         var $getBet = $(this).text();
         if ($getBet=== '$5') {
-          games.bet = 5;
-          $('#btn-10').removeClass('btn-full');
-          $('#btn-20').removeClass('btn-full');
-          $('#btn-10').css('color','');
-          $('#btn-20').css('color','');
+          creditGood = games.checkCredit(5);
         } else if($getBet === '$10') {
-          games.bet = 10;
-          $('#btn-5').removeClass('btn-full');
-          $('#btn-20').removeClass('btn-full');
-          $('#btn-5').css('color','');
-          $('#btn-20').css('color','');
+          creditGood = games.checkCredit(10);
         } else if($getBet === '$20') {
-          games.bet = 20;
-          $('#btn-5').removeClass('btn-full');
-          $('#btn-10').removeClass('btn-full');
-          $('#btn-10').css('color','');
-          $('#btn-5').css('color','');
-        } else {
-          games.bet = 0;
-          // $('#btn-5').removeClass('btn-full');
-          // $('#btn-10').removeClass('btn-full');
-          // $('#btn-20').removeClass('btn-full');
-          //
-          // $('#btn-10').css('color','');
-          // $('#btn-20').css('color','');
-          // $('#btn-5').css('color','');
+          creditGood = games.checkCredit(20);
         }
 
-        $(this).css('color','white');
-        $(this).addClass('btn-full');
+        if (creditGood) {
+
+
+          if ($getBet=== '$5') {
+            games.bet = 5;
+            $('#btn-10').removeClass('btn-full');
+            $('#btn-20').removeClass('btn-full');
+            $('#btn-10').css('color','');
+            $('#btn-20').css('color','');
+          } else if($getBet === '$10') {
+            games.bet = 10;
+            $('#btn-5').removeClass('btn-full');
+            $('#btn-20').removeClass('btn-full');
+            $('#btn-5').css('color','');
+            $('#btn-20').css('color','');
+          } else if($getBet === '$20') {
+            games.bet = 20;
+            $('#btn-5').removeClass('btn-full');
+            $('#btn-10').removeClass('btn-full');
+            $('#btn-10').css('color','');
+            $('#btn-5').css('color','');
+          } else {
+            games.bet = 0;
+            $('#btn-5').removeClass('btn-full');
+            $('#btn-10').removeClass('btn-full');
+            $('#btn-20').removeClass('btn-full');
+
+            $('#btn-10').css('color','');
+            $('#btn-20').css('color','');
+            $('#btn-5').css('color','');
+          }
+
+          $(this).css('color','white');
+          $(this).addClass('btn-full');
+
+        } else {
+          games.bet = 0;
+        } // end if credit good..
         games.setUserFundBet(false, games.bet );
 
       }
@@ -174,6 +193,13 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
         $('#btn-start').show();
         $('#btn-fold').hide();
         $('#btn-play').hide();
+        $('#btn-5').removeClass('btn-full');
+        $('#btn-10').removeClass('btn-full');
+        $('#btn-20').removeClass('btn-full');
+
+        $('#btn-10').css('color','');
+        $('#btn-20').css('color','');
+        $('#btn-5').css('color','');
 
       } else {
         $('#btn-start').hide();
@@ -208,9 +234,14 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
     cardRanks = cards.cardsRanks;
     deckOfCard = cards.deckOfCard;
     //allFunctions.setUpDesk();
+    games.resetStartNewGame();
+    games.gameOver = true;
     games.setUpDeck();
     games.createPlayer("Computer");
     games.createPlayer("Human");
+    games.setUserFundBet(true, 0);
+    allButtons.setButtons();
+
   }
 
   var cards = {
@@ -248,7 +279,7 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
     players: [],
     // Create a new peon
     createPlayer: function(name) {
-      var newPlayer = new Player(name, 200);
+      var newPlayer = new Player(name, 15);
       this.players.push(newPlayer);
     },
     setUpDeck : function() {
@@ -336,11 +367,6 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
         }
         games.bet = 0;
         allButtons.setButtons();
-
-
-
-       //allButtons.setButtons();
-
 
       }
 
@@ -687,7 +713,19 @@ console.log("is game over ? (inside bet) "+ games.gameOver);
       games.playerPlayCard =  0;
       games.computerPlayCard = 0;
       games.storeWinnerByRound = [];
-    }
+    }, // end resetStartNewGame
+    checkCredit: function(bet) {
+      // check credit - if less than bet amount .. return message
+
+      var userCredit = games.players[1].money;
+
+      console.log(userCredit + " user have this much money " + bet);
+      if (parseInt(bet) > parseInt(userCredit)  ) {
+        alert("You don't have enough credit to bet.")
+        return false;
+      }
+      return true;
+    } // end checkCredit
 
   } // end Games ...
 

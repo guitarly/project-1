@@ -44,6 +44,8 @@ $(function() {
     },
     restart: function() {
       console.log("restart game");
+
+      init();
     },
     fold: function() {
       if (games.playerTurn) {
@@ -235,7 +237,8 @@ $(function() {
     deckOfCard = cards.deckOfCard;
     //allFunctions.setUpDesk();
     games.resetStartNewGame();
-    games.gameOver = true;
+
+    games.resetTheWholeGame()
     games.setUpDeck();
     games.createPlayer("Computer");
     games.createPlayer("Human");
@@ -376,9 +379,11 @@ $(function() {
 
       if (player === 'computer') {
         $('#comp-section').children().remove();
+        $('#sec-middle-comp').children().remove();
       } else {
         // remove player section
         $('#play-section').children().remove();
+        $('#sec-middle-human').children().remove();
       }
 
       var card ;
@@ -725,7 +730,31 @@ $(function() {
         return false;
       }
       return true;
-    } // end checkCredit
+    },  // end checkCredit
+
+    resetTheWholeGame: function() {
+      // Reset the whole games...
+      games.gameOver = true;
+      games.compCardOnPlay = {};
+      games.cmpWinByRound = 0;
+      games.humWinByRound = 0;
+      games.playerPlayCard =  0;
+      games.computerPlayCard = 0;
+      games.storeWinnerByRound = [];
+      games.playerCardOnPlay = {};
+      games.playerCardOnHold = {};
+      games.playerCardCurrentIndex = null;
+      games.playerTurn = true;
+      games.playerPlayCard = 0;
+      games.computerPlayCard = 0;
+      games.playerDealer = true ;
+      games.bet = 0;
+      games.storeWinnerByRound = [];
+      games.players = [];
+      games.cleanPlayersCards('computer'); // Clean the bucket first
+      games.cleanPlayersCards('human'); // Clean the bucket first
+
+    }
 
   } // end Games ...
 

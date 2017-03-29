@@ -44,7 +44,8 @@ $(function() {
       var answer = prompt("Do you want to close this window ?", "yes/no");
       if (answer.toUpperCase() === 'YES' ) {
         // display big message in the middle....
-        games.setWinLossImage('Over');
+        games.setWinLossImage('OVER');
+        games.hideElements();
       }
     },
     restart: function() { // reset the whole game
@@ -785,11 +786,21 @@ $(function() {
       console.log($btnTexBoxWinner);
 
       var $img = $('<img>').addClass("winner-image");
-      $img.attr({
-          src: 'vendor/images/'+getPicture,
-          title: "Winner",
-          alt: getPicture
-        });
+      if(str === 'OVER') {
+        $img.attr({
+            src: 'vendor/images/'+getPicture,
+            title: "Winner",
+            alt: getPicture
+          });
+        $img.css({'width':'90%'});
+      } else {
+        $img.attr({
+            src: 'vendor/images/'+getPicture,
+            title: "Winner",
+            alt: getPicture
+          });
+      }
+
       $btnTexBoxWinner.append($img);
 
       // $img.animate({left: '350px',
@@ -811,7 +822,21 @@ $(function() {
 
 
 
-    }
+    }, // end setWinLossImage
+    hideElements: function() {
+      $('.sec-head').children().hide();
+      $('.btn-text-box-cmp').children().hide();
+      $('#sec-middle-comp').children().hide();
+      $('#sec-middle-comp').hide();
+      $('#comp-section').hide();
+      $('#play-section').hide();
+      $('#sec-middle-human').hide();
+      $('.btn-text-box-money').children().hide();
+      $('.btn-text-box-money').hide();
+      $('.btn-text-box').hide();
+
+
+    } // end hideElements
 
   } // end Games ...
 

@@ -67,7 +67,7 @@ h1 {
 }
 
 .btn-text-box {
-  bottom:4%;
+  bottom:15%;
   left: 100%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -75,8 +75,8 @@ h1 {
 }
 
 .btn-text-box-cmp {
-  top:10%;
-  right: -57%;
+  top:25%;
+  right: -60%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -88,7 +88,7 @@ h1 {
   align-items: center;*/
   text-align: center;
   color: white;
-  bottom:35%;
+  bottom:30%;
   left: 80%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);

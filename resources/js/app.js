@@ -919,7 +919,7 @@ $(function() {
       width: '190%',
       margin: '0 auto'});
 
-      $('h1').animate({left: '100px',
+      $('h1').animate({left: '15px',
       opacity: '1.0',
       height: '100px',
       width: '30%',

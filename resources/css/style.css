@@ -39,13 +39,13 @@ body {
 
 h1 {
   color: white;
-  font-size: 90px;
+  font-size: 50px;
   font-weight: 400;
   font-family: 'Macondo', cursive;
   height: 500px;
-  width: 100%;
+  width: 30%;
   position: absolute;
-  padding-top: 100px;
+  padding-top: 30px;
 }
 
 .clearfix {zoom: 1;}
@@ -76,7 +76,7 @@ h1 {
 
 .btn-text-box {
   bottom:15%;
-  left: 100%;
+  left: 110%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -86,7 +86,7 @@ h1 {
   /*top: 13%;
   right: -60%;*/
   top:15%;
-  left: 100%;
+  left: 110%;
   z-index: 1;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);

@@ -45,7 +45,7 @@ $(function() {
       if (answer.toUpperCase() === 'YES' ) {
         // display big message in the middle....
         games.setWinLossImage('OVER');
-        games.hideElements();
+        games.hideElements("EndofGames");
       }
     },
     restart: function() { // reset the whole game
@@ -53,15 +53,19 @@ $(function() {
       init();
     },
     fold: function() {
-      if (games.playerTurn) {
-        if (games.playerDealer) {
-          alert("You can't fold a card.")
-        } else {
-          games.foldCards("Human");
-          games.removeCards('Human');
-        }
+      if ($.isEmptyObject(games.playerCardOnPlay) && games.playerTurn) {
+        alert("Please pick a card.")
 
-        //games.checkWinner();
+      } else {
+
+        if (games.playerTurn) {
+          if (games.playerDealer) {
+            alert("You can't fold a card.")
+          } else {
+            games.foldCards("Human");
+            games.removeCards('Human');
+          }
+        }
       }
     },
     play: function() {
@@ -210,7 +214,6 @@ $(function() {
 
     }, // end computer turn
     setButtons: function() {  // set buttons once the game play or over.
-      console.log("setButton ... " + games.gameOver);
 
       if (games.gameOver) {
         $('#btn-start').show();
@@ -305,7 +308,7 @@ $(function() {
     players: [],
     // Create a new peon
     createPlayer: function(name) {
-      var newPlayer = new Player(name, 100);
+      var newPlayer = new Player(name, 5);
       this.players.push(newPlayer);
     },
     setUpDeck : function() {  // setup a deck.  Loop thrus suites and ranks.
@@ -443,6 +446,15 @@ $(function() {
       $moneyBox.text("Credit:   $"+fund);
 
 
+
+      if (fund <= 0 && games.bet === 0) {
+        games.gameOver = true;
+        games.setWinLossImage('OVER');
+        games.hideElements('fund');
+
+      }
+
+
     }, // End setUserFundBet
 
     displayCards: function(player) {
@@ -556,7 +568,7 @@ $(function() {
         }
 
       } else {
-
+        // remove the card on hand..
         currentIndex = games.playerCardCurrentIndex;
         $getId = $('#human-card-'+currentIndex);
         // $getId.animate({left: "-=300"}, 500);
@@ -793,6 +805,7 @@ $(function() {
       var getPicture = pictures[index];
 
       var $btnTexBoxWinner = $('.btn-text-box-winner');
+      $btnTexBoxWinner.children().remove();
 
       var $img = $('<img>').addClass("winner-image");
       if(str === 'OVER') {
@@ -830,11 +843,16 @@ $(function() {
       // bottom: '50%',
       // margin: '0 auto'});
       //
-      // $btnTexBoxWinner.stop();
+      //  $btnTexBoxWinner.stop();
 
     }, // end setWinLossImage
-    hideElements: function() {
-      $('.sec-head').children().hide();
+    hideElements: function(string) {
+      if (string.toUpperCase() === 'FUND') {
+
+      } else {
+        $('.sec-head').children().hide();
+      }
+
       $('.btn-text-box-cmp').children().hide();
       $('#sec-middle-comp').children().hide();
       $('#sec-middle-comp').hide();

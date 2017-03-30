@@ -69,10 +69,11 @@ $(function() {
       } else {
         if (games.playerTurn) {
 
-          // --- testing.. get the current player card index
-          // set it animate later
+
 
           games.removeCards('human');
+          // --- testing.. get the current player card index
+          // set it animate later
           // var currentIndex = games.playerCardCurrentIndex;
           // console.log("Current card " +  currentIndex);
           // var $getId = $('#human-card-'+currentIndex);
@@ -87,7 +88,14 @@ $(function() {
             // computer turn ...
             allButtons.checkComputer();
           } else {
-            games.setBackCardImage('Computer');
+
+            var check = games.checkComputerAndHumanCard() ;
+            if (check) {
+              games.setBackCardImage('Computer');
+            } else {
+              games.setBackCardImage('Human');
+            }
+
           }
         } else {
           alert("Computer turns")
@@ -288,7 +296,7 @@ $(function() {
     players: [],
     // Create a new peon
     createPlayer: function(name) {
-      var newPlayer = new Player(name, 15);
+      var newPlayer = new Player(name, 100);
       this.players.push(newPlayer);
     },
     setUpDeck : function() {  // setup a deck.  Loop thrus suites and ranks.
@@ -837,7 +845,30 @@ $(function() {
       $('.btn-text-box').hide();
 
 
-    } // end hideElements
+    }, // end hideElements
+    checkComputerAndHumanCard: function() {
+      console.log(games.playerDealer );
+      if (games.playerDealer === false) {
+        var humanCard = games.playerCardOnHold;
+        var computerCard = games.compCardOnPlay;
+        console.log("---------------");
+        console.log(humanCard);
+        console.log(computerCard);
+        console.log("-----------");
+        // compare computer card and human card
+        if (computerCard.suite === humanCard.suite) {
+          if (computer.points > humanCard.points) {
+            return false;
+          } else {
+            return true;  // player card is greater than computer card.
+          }
+        } else {
+          return false; // fail.. no same suite .  can't beat the computer.
+        }
+
+
+      }
+    }
 
   } // end Games ...
 

@@ -31,8 +31,8 @@ $(function() {
         games.getCardsForPlayers(); // Get new cards for players
         games.displayCards('comp'); // display cards on the screen
         games.displayCards('human'); // display cards on the screen
-        games.setClickCards();
-        allButtons.setButtons();
+        games.setClickCards();  // user click each card
+        allButtons.setButtons(); // set handles
 
 
 
@@ -81,17 +81,7 @@ $(function() {
 
 
 
-          games.removeCards('human');
-          // --- testing.. get the current player card index
-          // set it animate later
-          // var currentIndex = games.playerCardCurrentIndex;
-          // console.log("Current card " +  currentIndex);
-          // var $getId = $('#human-card-'+currentIndex);
-          // // $getId.animate({left: "-=300"}, 500);
-          // $getId.hide( 1000, function() {
-          //   $getId.remove();
-          // });
-          // ----------
+          games.removeCards('human');  // remove card from human hand
 
           games.setPlayerCardSection();
           if (games.playerDealer && games.playerTurn) {
@@ -558,7 +548,7 @@ $(function() {
 
       }
 
-      $div = $('<div>').attr('id', 'card-in-play');
+      $div = $('<div>').addClass('card-in-play');
       $img = $('<img>').addClass("cardImage");
       $img.attr({
         src: 'vendor/images/PNG-cards-1.3/'+$backImage ,
@@ -620,7 +610,7 @@ $(function() {
         var countCard = games.computerPlayCard++;
         var $playSection = $('#comp-section');
         var $image = games.compCardOnPlay.image;
-        $div = $('<div>').attr('id', 'card-in-play');
+        $div = $('<div>').addClass('card-in-play');
         $img = $('<img>').addClass("cardImage");
         $img.attr({
           id:  'cmp-card-'+countCard,
@@ -679,7 +669,7 @@ $(function() {
 
       var playCard = games.playerPlayCard++;
       var $playSection = $('#play-section');
-      var $div = $('<div>').attr('id', 'card-in-play');
+      var $div = $('<div>').addClass('card-in-play');
       var $img = $('<img>').addClass("cardImage");
       $img.attr({
         id: 'play-card-'+playCard,

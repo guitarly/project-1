@@ -41,7 +41,7 @@ h1 {
   height: 500px;
   width: 100%;
   position: absolute;
-  text-shadow: 2px 2px #e67e22;
+  /*text-shadow: 2px 2px 5px #e67e22;*/
 }
 
 .clearfix {zoom: 1;}
@@ -205,7 +205,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: inherit;
   width: 35%;
   margin: 0 auto;
   top: 0%;
@@ -228,7 +228,7 @@ h1 {
   width: 100%;
 }
 
-#card-in-play {
+.card-in-play {
   padding: 10px;
   border: 1px solid white;
   border-radius: 10px;

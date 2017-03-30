@@ -50,8 +50,12 @@ $(function() {
     },
     restart: function() { // reset the whole game
       console.log("restart game");
-      init();
-      games.showElements();
+      var answer = prompt("Are you sure you want to restart a new game?", "Yes or No");
+      if (answer.toUpperCase() === 'YES') {
+        init();
+        games.showElements();
+      }
+
     },
     fold: function() {
       if ($.isEmptyObject(games.playerCardOnPlay) && games.playerTurn) {

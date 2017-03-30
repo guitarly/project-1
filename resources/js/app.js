@@ -265,9 +265,7 @@ $(function() {
     allButtons.setButtons();
 
     games.showGameTitleAnimate();
-
-    // testing..
-    games.cardClick = false;
+    games.checkDealer();
 
   }
 
@@ -369,9 +367,7 @@ $(function() {
       if (games.cmpWinByRound === 0 && games.humWinByRound === 4) {
         games.gameOver = true;
         humanWin = true;
-
       }
-      console.log(games.storeWinnerByRound);
 
       // the comp and human pass first four around.  This is round #5 & 6.  who won a round 6 is the winner.
       if (games.storeWinnerByRound.length === 6) {
@@ -399,8 +395,8 @@ $(function() {
         }
         games.bet = 0;
         allButtons.setButtons();
-
       }
+      games.checkDealer();
 
     },
     cleanPlayersCards: function (player) {
@@ -870,6 +866,8 @@ $(function() {
       $('.btn-text-box-money').hide();
       $('.btn-text-box').hide();
       $('.btn-text-box-cmp').children().hide();
+      $('.comp-deal-circle').hide();
+      $('.human-deal-circle').hide();
 
 
     }, // end hideElements
@@ -904,6 +902,8 @@ $(function() {
       $('.btn-text-box-money').children().show();
       $('.btn-text-box-money').show();
       $('.btn-text-box').show();
+      $('.comp-deal-circle').show();
+      $('.human-deal-circle').show();
 
     }, // end showElements
     showGameTitleAnimate: function() {  // show title of the game animate
@@ -925,8 +925,20 @@ $(function() {
       width: '30%',
       margin: '0 auto'});
 
-    }
+    }, // end showGameTitleAnimate
 
+    checkDealer: function() {  // whoever win is a dealer .. go first
+      var $cmpDeal = $('.comp-deal-circle');
+      var $humDeal = $('.human-deal-circle');
+      if (games.playerDealer) {
+        $cmpDeal.hide();
+        $humDeal.show();
+      } else {
+        $cmpDeal.show();
+        $humDeal.hide();
+      }
+
+    }
   } // end Games ...
 
   // --------------- end classes ------

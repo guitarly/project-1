@@ -165,6 +165,30 @@ h1 {
 
 }
 
+.comp-deal-circle, .human-deal-circle {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  font-weight: bold;
+  font-size: 30px;
+  border: white;
+  color: black;
+  text-align: center;
+  border-radius: 25px;
+  background-color: yellow;
+  border: 1px solid #cf6d17;
+  right: 32% ;
+
+
+}
+.comp-deal-circle {
+  top:10%;
+}
+.human-deal-circle {
+  bottom: 10%;
+}
+
+
 /*-----------------*/
 /*--   Cards  -----*/
 /*-----------------*/

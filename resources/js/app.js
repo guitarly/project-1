@@ -54,8 +54,13 @@ $(function() {
     },
     fold: function() {
       if (games.playerTurn) {
-        games.foldCards("Human");
-        games.removeCards('Human');
+        if (games.playerDealer) {
+          alert("You can't fold a card.")
+        } else {
+          games.foldCards("Human");
+          games.removeCards('Human');
+        }
+
         //games.checkWinner();
       }
     },
@@ -90,6 +95,7 @@ $(function() {
           } else {
 
             var check = games.checkComputerAndHumanCard() ;
+            console.log("what is check here..." + check);
             if (check) {
               games.setBackCardImage('Computer');
             } else {
@@ -191,7 +197,10 @@ $(function() {
     }, // end setBtnCards
     computerPick: function() {
       // computer turn to hit a card.
-      games.computerPickCard();
+      if (games.gameOver === false) {
+        games.computerPickCard();
+      }
+
 
     },
     checkComputer: function() {  // check computer to pick by itself
@@ -537,12 +546,10 @@ $(function() {
       var $getId ;
 
       if (player === "Computer") {
-        console.log("remove card for computer");
         // computer never show face up.. can remove any of if.
         var $secmiddlecomp = $('#sec-middle-comp');
         var $number = $secmiddlecomp.children('div').length;
         if($number >= 0) {
-          console.log($number);
           var $getCompCard = $('#cmp-div-'+($number - 1));
           $getCompCard.remove();
 
@@ -551,7 +558,6 @@ $(function() {
       } else {
 
         currentIndex = games.playerCardCurrentIndex;
-        console.log("Current card " +  currentIndex);
         $getId = $('#human-card-'+currentIndex);
         // $getId.animate({left: "-=300"}, 500);
         $getId.hide( 1000, function() {
@@ -565,7 +571,6 @@ $(function() {
     computerPickCard: function() {
 
       if (games.playerTurn === false) {
-        console.log("computerPickCard");
         var computerCards = games.players[0].card;
         var pickRandomCard = Math.floor(Math.random() * computerCards.length);
 
@@ -662,7 +667,6 @@ $(function() {
     }, // end setPlayerCardSection
 
     checkComparedCard: function() {  // computer calcuate cards
-      console.log('computer turn ');
 
       // Get Human card on hold
       var humanCardOnHold = games.playerCardOnHold;
@@ -742,7 +746,6 @@ $(function() {
 
       var userCredit = games.players[1].money;
 
-      console.log(userCredit + " user have this much money " + bet);
       if (parseInt(bet) > parseInt(userCredit)  ) {
         alert("You don't have enough credit to bet.")
         return false;
@@ -774,7 +777,7 @@ $(function() {
 
     }, // end resetTheWholeGame
     setWinLossImage: function(str) {
-      console.log("iam in setWinLossImage");
+
       var pictures ;
       str = str.toUpperCase();
       // set winning image
@@ -788,10 +791,8 @@ $(function() {
 
       var index = Math.floor(Math.random() * pictures.length);
       var getPicture = pictures[index];
-      console.log(index +  "   " + getPicture);
 
       var $btnTexBoxWinner = $('.btn-text-box-winner');
-      console.log($btnTexBoxWinner);
 
       var $img = $('<img>').addClass("winner-image");
       if(str === 'OVER') {
@@ -847,17 +848,13 @@ $(function() {
 
     }, // end hideElements
     checkComputerAndHumanCard: function() {
-      console.log(games.playerDealer );
       if (games.playerDealer === false) {
         var humanCard = games.playerCardOnHold;
         var computerCard = games.compCardOnPlay;
-        console.log("---------------");
-        console.log(humanCard);
-        console.log(computerCard);
-        console.log("-----------");
+
         // compare computer card and human card
         if (computerCard.suite === humanCard.suite) {
-          if (computer.points > humanCard.points) {
+          if (computerCard.points > humanCard.points) {
             return false;
           } else {
             return true;  // player card is greater than computer card.
@@ -865,8 +862,8 @@ $(function() {
         } else {
           return false; // fail.. no same suite .  can't beat the computer.
         }
-
-
+      } else {
+        return true;
       }
     }
 

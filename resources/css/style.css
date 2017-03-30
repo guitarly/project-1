@@ -133,13 +133,36 @@ body {
   border: 1px solid #cf6d17;
   color: #fff;
 }
-#btn-fund {
+.deal-circle {
   width: 35%;
   left:50%;
+
+
 }
+
+
 /*-----------------*/
 /*--   Cards  -----*/
 /*-----------------*/
+
+#human-deal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: -50%;
+  width: 100px;
+  height: 100px;
+  background: brown;
+  border: 1px solid silver;
+  border-radius: 50%;
+
+}
+#comp-deal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
 
 .cmp-player, .human-player, .cardImage {
   width: 80px;
@@ -206,10 +229,10 @@ body {
 }
 
 [id*="human-card-"] {
-    width: 100%;
+  width: 100%;
 }
 [id*="human-card-"]:hover,
- [id*="human-card-"]:active {
+[id*="human-card-"]:active {
   border: 2px solid yellow;
   margin-top: -50px;
 

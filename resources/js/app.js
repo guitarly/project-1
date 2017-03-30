@@ -915,22 +915,22 @@ $(function() {
     }, // end showElements
     showGameTitleAnimate: function() {  // show title of the game animate
 
-      $('h1').animate({left: '6650px',
-      opacity: '0.8',
+      $('h1').animate({left: '100%',
+      opacity: '0.5',
       height: '500px',
       width: '190%',
-      margin: '0 auto'});
-      $('h1').animate({right: '150px',
-      opacity: '0.9',
+      margin: '0 auto'}, 500);
+      $('h1').animate({right: '0px',
+      opacity: '0.6',
       height: '400px',
       width: '190%',
-      margin: '0 auto'});
+      margin: '0 auto'}, 1000);
 
       $('h1').animate({left: '15px',
       opacity: '1.0',
       height: '100px',
       width: '30%',
-      margin: '0 auto'});
+      margin: '0 auto'}, 3000);
 
     }, // end showGameTitleAnimate
 

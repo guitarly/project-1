@@ -112,9 +112,11 @@ $(function() {
       var playerCard = games.players[1].card[index];
       games.playerCardOnPlay = playerCard;   // set player card - on play
       games.playerCardCurrentIndex = index;  // set play card index on hand
+      // move card up..using css
       var $currentCard = $('#human-card-'+index).css({
         'margin-top': '-50px'
       });
+
     },
     bet: function() {
       console.log($(this).text());
@@ -262,22 +264,10 @@ $(function() {
     games.setUserFundBet(true, 0);
     allButtons.setButtons();
 
-    $('h1').animate({left: '6650px',
-    opacity: '0.8',
-    height: '500px',
-    width: '190%',
-    margin: '0 auto'});
-    $('h1').animate({right: '150px',
-    opacity: '0.9',
-    height: '400px',
-    width: '190%',
-    margin: '0 auto'});
+    games.showGameTitleAnimate();
 
-    $('h1').animate({left: '100px',
-    opacity: '1.0',
-    height: '100px',
-    width: '30%',
-    margin: '0 auto'});
+    // testing..
+    games.cardClick = false;
 
   }
 
@@ -316,6 +306,7 @@ $(function() {
     bet: 0,
     storeWinnerByRound:[],
     players: [],
+    cardClick: false,
     // Create a new peon
     createPlayer: function(name) {
       var newPlayer = new Player(name, 100);
@@ -913,6 +904,26 @@ $(function() {
       $('.btn-text-box-money').children().show();
       $('.btn-text-box-money').show();
       $('.btn-text-box').show();
+
+    }, // end showElements
+    showGameTitleAnimate: function() {  // show title of the game animate
+
+      $('h1').animate({left: '6650px',
+      opacity: '0.8',
+      height: '500px',
+      width: '190%',
+      margin: '0 auto'});
+      $('h1').animate({right: '150px',
+      opacity: '0.9',
+      height: '400px',
+      width: '190%',
+      margin: '0 auto'});
+
+      $('h1').animate({left: '100px',
+      opacity: '1.0',
+      height: '100px',
+      width: '30%',
+      margin: '0 auto'});
 
     }
 

@@ -61,7 +61,7 @@ h1 {
 /* ----- BUTTONS ----- */
 
 .btn-text-box, .btn-text-box-cmp,
-.btn-text-box-money{
+.btn-text-box-money, .btn-text-box-cmp {
 
   position: absolute;
   width: 1140px;
@@ -79,8 +79,8 @@ h1 {
 }
 
 .btn-text-box-cmp {
-  top:25%;
-  right: -60%;
+  top: 15%;
+  left: 100%;
   z-index: 1;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -152,10 +152,10 @@ h1 {
 
 #footer-text {
   display: flex;
-    align-items: center;
-    bottom: 0;
-    left: 0;
-    position: fixed;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  position: fixed;
 
 }
 

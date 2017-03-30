@@ -270,6 +270,23 @@ $(function() {
     games.setUserFundBet(true, 0);
     allButtons.setButtons();
 
+    $('h1').animate({left: '6650px',
+    opacity: '3.0',
+    height: '500px',
+    width: '190%',
+    margin: '0 auto'});
+    $('h1').animate({right: '150px',
+    opacity: '3.0',
+    height: '400px',
+    width: '190%',
+    margin: '0 auto'});
+
+    $('h1').animate({left: '100px',
+    opacity: '3.0',
+    height: '100px',
+    width: '30%',
+    margin: '0 auto'});
+
   }
 
   // var card and deck.  will do a loop to generate all cards.
@@ -753,6 +770,8 @@ $(function() {
       games.playerPlayCard =  0;
       games.computerPlayCard = 0;
       games.storeWinnerByRound = [];
+      var $secWinImage = $('#sec-win-image');
+      $secWinImage.children().remove();
     }, // end resetStartNewGame
     checkCredit: function(bet) {
       // check credit - if less than bet amount .. return message
@@ -805,8 +824,12 @@ $(function() {
       var index = Math.floor(Math.random() * pictures.length);
       var getPicture = pictures[index];
 
-      var $btnTexBoxWinner = $('.btn-text-box-winner');
-      $btnTexBoxWinner.children().remove();
+      var $secWinImage = $('#sec-win-image');
+      $secWinImage.children().remove();
+      var $btnTexBoxWinner = $('<div>').addClass('btn-text-box-winner');
+
+      // var $btnTexBoxWinner = $('.btn-text-box-winner');
+      // $btnTexBoxWinner.children().remove();
 
       var $img = $('<img>').addClass("winner-image");
       if(str === 'OVER') {
@@ -825,24 +848,25 @@ $(function() {
       }
 
       $btnTexBoxWinner.append($img);
+      $secWinImage.append($btnTexBoxWinner);
 
-      // $btnTexBoxWinner.animate({left: '350px',
-      // opacity: '0.9',
-      // height: '150px',
-      // width: '10%',
-      // margin: '0 auto'});
-      // $btnTexBoxWinner.animate({right: '350px',
-      // opacity: '0.9',
-      // height: '150px',
-      // width: '190%',
-      // margin: '0 auto'});
-      //
-      // $btnTexBoxWinner.animate({left: '350px',
-      // opacity: '0.9',
-      // height: '250px',
-      // width: '70%',
-      // bottom: '50%',
-      // margin: '0 auto'});
+      $btnTexBoxWinner.animate({left: '350px',
+      opacity: '0.9',
+      height: '150px',
+      width: '10%',
+      margin: '0 auto'});
+      $btnTexBoxWinner.animate({right: '350px',
+      opacity: '0.9',
+      height: '150px',
+      width: '190%',
+      margin: '0 auto'});
+
+      $btnTexBoxWinner.animate({left: '350px',
+      opacity: '0.9',
+      height: '250px',
+      width: '100%',
+      bottom: '50%',
+      margin: '0 auto'});
 
       //  $btnTexBoxWinner.stop();
 

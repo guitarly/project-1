@@ -38,6 +38,9 @@ h1 {
   font-size: 50px;
   font-weight: 400;
   font-family: 'Macondo', cursive;
+  height: 500px;
+  width: 100%;
+  position: absolute;
 }
 
 .clearfix {zoom: 1;}
@@ -77,6 +80,7 @@ h1 {
 .btn-text-box-cmp {
   top:25%;
   right: -60%;
+  z-index: 1;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -144,13 +148,27 @@ h1 {
   border: 1px solid #cf6d17;
   color: #fff;
 }
-.deal-circle {
-  width: 35%;
-  left:50%;
 
-
+#footer-text {
+  display: flex;
+  align-items: center;
+  width: 10%;
+  height: 20px;
+  float: left;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0 0 -50% 0;
 }
-
+/*.footer {
+  position: absolute;
+  right: 100px;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: rgba(0,0,0, .5);
+  text-align: center;
+}*/
 
 /*-----------------*/
 /*--   Cards  -----*/
@@ -192,12 +210,16 @@ h1 {
 .main-sec {
   display: flex;
   justify-content: center;
-
   align-items: flex-end;
 }
 #sec-middle-comp {
   display: flex;
   justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 35%;
+  margin: 0 auto;
+  top: 0%;
 }
 #sec-middle-human{
   margin: 0 auto;

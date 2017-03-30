@@ -808,7 +808,7 @@ $(function() {
       } else if(str === "LOST"){
         pictures = ['youaretheloser.jpg', 'youjustlost.jpg'];
       } else if(str === "OVER") {
-        pictures = ['gameOver.jpg', 'gameOver1.jpg'];
+        pictures = ['gameOver.jpg', 'gameover1.jpg'];
       }
 
       var index = Math.floor(Math.random() * pictures.length);

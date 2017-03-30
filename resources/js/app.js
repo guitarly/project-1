@@ -54,6 +54,7 @@ $(function() {
       if (answer.toUpperCase() === 'YES') {
         init();
         games.showElements();
+        games.checkDealer();
       }
 
     },
@@ -308,8 +309,7 @@ $(function() {
     bet: 0,
     storeWinnerByRound:[],
     players: [],
-    cardClick: false,
-    // Create a new peon
+    // Create a new player
     createPlayer: function(name) {
       var newPlayer = new Player(name, 100);
       this.players.push(newPlayer);
@@ -748,6 +748,7 @@ $(function() {
     resetStartNewGame: function() {
       // Reset Winning rounds
       games.gameOver = false;
+      games.playerDealer = true;
       games.cmpWinByRound = 0;
       games.humWinByRound = 0;
       games.playerPlayCard =  0;
@@ -755,6 +756,7 @@ $(function() {
       games.storeWinnerByRound = [];
       var $secWinImage = $('#sec-win-image');
       $secWinImage.children().remove();
+      games.checkDealer();
     }, // end resetStartNewGame
     checkCredit: function(bet) {
       // check credit - if less than bet amount .. return message
@@ -908,6 +910,7 @@ $(function() {
       $('.btn-text-box').show();
       $('.comp-deal-circle').show();
       $('.human-deal-circle').show();
+      $('#btn-comp-pick').hide();
 
     }, // end showElements
     showGameTitleAnimate: function() {  // show title of the game animate

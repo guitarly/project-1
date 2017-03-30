@@ -14,6 +14,7 @@ $(function() {
   var $btnBet5 = $('#btn-5');
   var $btnBet10 = $('#btn-10');
   var $btnBet20 = $('#btn-20');
+  var $btnHow = $('#btn-how');
 
 
   // set up buttons functions
@@ -41,8 +42,8 @@ $(function() {
     },
     endGame: function() {
       console.log("End of Game");
-      var answer = prompt("Do you want to close this window ?", "yes/no");
-      if (answer.toUpperCase() === 'YES' ) {
+      var answer = prompt("Do you want to close this window ?", "Yes or No");
+      if (answer != null && answer.toUpperCase() === 'YES' ) {
         // display big message in the middle....
         games.setWinLossImage('OVER');
         games.hideElements("EndofGames");
@@ -51,7 +52,7 @@ $(function() {
     restart: function() { // reset the whole game
       console.log("restart game");
       var answer = prompt("Are you sure you want to restart a new game?", "Yes or No");
-      if (answer.toUpperCase() === 'YES') {
+      if (answer != null && answer.toUpperCase() === 'YES') {
         init();
         games.showElements();
         games.checkDealer();
@@ -233,6 +234,12 @@ $(function() {
         $('#btn-comp-pick').show();
       }
 
+    }, // end setButtons
+      instruction: function() {
+        $("#readme").animate({
+            height: 'toggle'
+        });
+
     }
 
   };
@@ -247,6 +254,7 @@ $(function() {
   $btnBet5.on('click', allButtons.bet);
   $btnBet10.on('click', allButtons.bet);
   $btnBet20.on('click', allButtons.bet);
+  $btnHow.on('click', allButtons.instruction);
 
   //-------------
 
@@ -551,6 +559,7 @@ $(function() {
       $div.append($img);
       $playSection.append($div);
       games.checkWinner();
+      games.checkDealer();
 
     }, // end Fold card
 
@@ -656,6 +665,7 @@ $(function() {
         src: 'vendor/images/PNG-cards-1.3/'+cardOnHold.backImage
       });
       games.checkWinner();
+      games.checkDealer();
 
     }, // end setBackCardImage
     setPlayerCardSection: function() {
@@ -744,11 +754,12 @@ $(function() {
       }
 
       games.checkWinner();
+      games.checkDealer();
     },
     resetStartNewGame: function() {
       // Reset Winning rounds
       games.gameOver = false;
-      games.playerDealer = true;
+      //games.playerDealer = true;
       games.cmpWinByRound = 0;
       games.humWinByRound = 0;
       games.playerPlayCard =  0;

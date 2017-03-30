@@ -35,7 +35,9 @@ body {
 
 h1 {
   color: white;
+  font-size: 50px;
   font-weight: 400;
+  font-family: 'Macondo', cursive;
 }
 
 .clearfix {zoom: 1;}

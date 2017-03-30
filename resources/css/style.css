@@ -33,6 +33,11 @@ body {
   overflow-x: hidden;
 }
 
+h1 {
+  color: white;
+  font-weight: 400;
+}
+
 .clearfix {zoom: 1;}
 .clearfix:after {
   content: '.';

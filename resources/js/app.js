@@ -213,6 +213,7 @@ $(function() {
         $('#btn-5').removeClass('btn-full');
         $('#btn-10').removeClass('btn-full');
         $('#btn-20').removeClass('btn-full');
+        $('#btn-comp-pick').hide();
 
         $('#btn-10').css('color','');
         $('#btn-20').css('color','');
@@ -222,6 +223,7 @@ $(function() {
         $('#btn-start').hide();
         $('#btn-fold').show();
         $('#btn-play').show();
+        $('#btn-comp-pick').show();
       }
 
     }
@@ -876,6 +878,7 @@ $(function() {
       $('.btn-text-box-money').children().hide();
       $('.btn-text-box-money').hide();
       $('.btn-text-box').hide();
+      $('.btn-text-box-cmp').children().hide();
 
 
     }, // end hideElements

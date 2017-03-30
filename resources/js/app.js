@@ -51,6 +51,7 @@ $(function() {
     restart: function() { // reset the whole game
       console.log("restart game");
       init();
+      games.showElements();
     },
     fold: function() {
       if ($.isEmptyObject(games.playerCardOnPlay) && games.playerTurn) {
@@ -308,7 +309,7 @@ $(function() {
     players: [],
     // Create a new peon
     createPlayer: function(name) {
-      var newPlayer = new Player(name, 5);
+      var newPlayer = new Player(name, 100);
       this.players.push(newPlayer);
     },
     setUpDeck : function() {  // setup a deck.  Loop thrus suites and ranks.
@@ -883,6 +884,20 @@ $(function() {
       } else {
         return true;
       }
+    }, // end checkComputerAndHumanCard
+    showElements: function() {
+
+      $('.sec-head').children().show();
+      $('.btn-text-box-cmp').children().show();
+      $('#sec-middle-comp').children().show();
+      $('#sec-middle-comp').show();
+      $('#comp-section').show();
+      $('#play-section').show();
+      $('#sec-middle-human').show();
+      $('.btn-text-box-money').children().show();
+      $('.btn-text-box-money').show();
+      $('.btn-text-box').show();
+
     }
 
   } // end Games ...

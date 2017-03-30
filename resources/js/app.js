@@ -843,7 +843,7 @@ $(function() {
       // width: '70%',
       // bottom: '50%',
       // margin: '0 auto'});
-      //
+
       //  $btnTexBoxWinner.stop();
 
     }, // end setWinLossImage

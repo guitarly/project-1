@@ -67,7 +67,7 @@ h1 {
 }
 
 .btn-text-box {
-  bottom:3%;
+  bottom:4%;
   left: 100%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -83,8 +83,12 @@ h1 {
 }
 
 .btn-text-box-money {
+  /*display: flex;
+  justify-content: center;
+  align-items: center;*/
+  text-align: center;
   color: white;
-  bottom:15%;
+  bottom:35%;
   left: 80%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -93,8 +97,8 @@ h1 {
   padding: 10px 30px;
   text-decoration: none;
   border-radius: 200px;
-  height: 200px;
-  width: 20%;
+  height: 175px;
+  width: 25%;
   margin: 0 center;
   float: right;
 }

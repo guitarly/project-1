@@ -271,18 +271,18 @@ $(function() {
     allButtons.setButtons();
 
     $('h1').animate({left: '6650px',
-    opacity: '3.0',
+    opacity: '0.8',
     height: '500px',
     width: '190%',
     margin: '0 auto'});
     $('h1').animate({right: '150px',
-    opacity: '3.0',
+    opacity: '0.9',
     height: '400px',
     width: '190%',
     margin: '0 auto'});
 
     $('h1').animate({left: '100px',
-    opacity: '3.0',
+    opacity: '1.0',
     height: '100px',
     width: '30%',
     margin: '0 auto'});
@@ -868,7 +868,6 @@ $(function() {
       bottom: '50%',
       margin: '0 auto'});
 
-      //  $btnTexBoxWinner.stop();
 
     }, // end setWinLossImage
     hideElements: function(string) {

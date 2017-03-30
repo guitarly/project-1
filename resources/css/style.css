@@ -79,7 +79,9 @@ h1 {
 }
 
 .btn-text-box-cmp {
-  top: 15%;
+  /*top: 13%;
+  right: -60%;*/
+  top:15%;
   left: 100%;
   z-index: 1;
   -webkit-transform: translate(-50%, -50%);

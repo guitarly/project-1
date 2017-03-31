@@ -812,7 +812,7 @@ $(function() {
       if (str === 'WIN') {
         pictures = ['Big-Win.png','luckyWinner.png', 'win1.png'];
       } else if(str === "LOST"){
-        pictures = ['youaretheloser.jpg', 'youjustlost.jpg'];
+        pictures = ['youaretheloser.jpg', 'youjustlost.jpg', 'sorryyoujustlostthegame.jpg'];
       } else if(str === "OVER") {
         pictures = ['gameOver.jpg', 'gameover1.jpg'];
       }

@@ -183,11 +183,11 @@ h1 {
 }
 
 .comp-deal-circle {
-    top: 10%;
+    top: 25%;
 }
 
 .human-deal-circle {
-    bottom: 10%;
+    bottom: 35%;
 }
 
 
@@ -240,31 +240,27 @@ h1 {
     align-items: flex-end;
 }
 
-#sec-middle-comp, #sec-middle-human {
+#sec-middle-comp, #sec-middle-human, #play-section, #comp-section {
     margin: 0 auto;
     width: 35%;
     display: flex;
     justify-content: center;
 }
 
-#sec-middle-comp {
+#sec-middle-comp, #sec-middle-human {
     align-items: flex-end;
     align-self: flex-end;
-    /*position: inherit;*/
-}
-
-#sec-middle-human {
-    align-items: flex-end;
-    align-self: flex-end;
+    padding: 10px;
 }
 
 #play-section, #comp-section {
-    display: flex;
+    /*display: flex;
     justify-content: center;
     align-items: center;
-    align-self: center;
-    height: 200px;
-    width: 100%;
+    align-self: center;*/
+    height: 150px;
+    width: 45%;
+    /*width: 100%;*/
 }
 
 .card-in-play {
